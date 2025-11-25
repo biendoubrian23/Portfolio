@@ -7,6 +7,7 @@ export default function PortfolioSection() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
+  
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
