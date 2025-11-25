@@ -1,4 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Meelo - Site Web Personnel
+
+Site portfolio moderne et élégant pour Jonathan Meelo, designer produit freelance basé à Londres.
+
+## 🎨 Caractéristiques
+
+- **Design moderne** avec palette de couleurs pastel (violet, vert, rose, bleu)
+- **Navigation fluide** avec ancres vers les différentes sections
+- **Sections complètes** : Accueil, Services, À propos, Expériences, Portefeuille, Statistiques, Processus, Témoignages, Contact
+- **Responsive design** adapté à tous les écrans
+- **Animations fluides** et transitions élégantes
+- **Performance optimisée** avec Next.js 14
+
+## 🚀 Technologies utilisées
+
+- **Next.js 14** - Framework React avec App Router
+- **TypeScript** - Typage statique
+- **Tailwind CSS** - Framework CSS utilitaire
+- **React** - Bibliothèque JavaScript
 
 ## Getting Started
 
