@@ -3,13 +3,7 @@
   publish = ".next"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-
-# Redirects pour SPA
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
