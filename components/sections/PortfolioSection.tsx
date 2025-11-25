@@ -49,7 +49,7 @@ export default function PortfolioSection() {
     },
     {
       title: 'Plateforme Growth - Croissance Réseaux Sociaux',
-      description: 'Growth est une plateforme moderne de croissance sur les réseaux sociaux, offrant des services de qualité avec support 24/7, plus de 3,5 millions de commandes complétées et une note de 4.4/5.',
+      description: 'Growth est une plateforme moderne de croissance sur les réseaux sociaux, offrant des services de qualité avec support 24/7, plus de 200 commandes complétées et une note de 4.4/5.',
       link: 'Consulter l\'étude de cas',
       bgColor: 'bg-gradient-to-br from-blue-50 to-green-50',
       image: '/cadre44.jpeg',

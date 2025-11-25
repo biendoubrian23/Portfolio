@@ -3,20 +3,20 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
+const navItems = [
+  { name: 'Accueil', href: '#maison', id: 'maison' },
+  { name: 'Services', href: '#apropos', id: 'apropos' },
+  { name: 'A Propos', href: '#aboutme', id: 'aboutme' },
+  { name: 'Mes Expériences', href: '#experiences', id: 'experiences' },
+  { name: 'Mes Projets', href: '#portefeuille', id: 'portefeuille' },
+  { name: 'Ma Stack', href: '#techstack', id: 'techstack' },
+  { name: 'Certifications', href: '#certifications', id: 'certifications' },
+  { name: 'Contact', href: '#contact', id: 'contact' },
+];
+
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState('Accueil');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const navItems = [
-    { name: 'Accueil', href: '#maison', id: 'maison' },
-    { name: 'Services', href: '#apropos', id: 'apropos' },
-    { name: 'A propos', href: '#aboutme', id: 'aboutme' },
-    { name: 'Mes Expériences', href: '#experiences', id: 'experiences' },
-    { name: 'Mes Projets', href: '#portefeuille', id: 'portefeuille' },
-    { name: 'Ma Stack', href: '#techstack', id: 'techstack' },
-    { name: 'Formation', href: '#formation', id: 'formation' },
-    { name: 'Contact', href: '#contact', id: 'contact' },
-  ];
 
   // Détection de la section visible au scroll
   useEffect(() => {
