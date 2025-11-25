@@ -31,6 +31,65 @@ export default function AboutMeSection() {
       id="aboutme"
       className="py-20 bg-purple-100 relative overflow-hidden"
     >
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { 
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), 
+                        0 0 40px rgba(139, 92, 246, 0.15),
+                        inset 0 0 20px rgba(255, 255, 255, 0.1);
+          }
+          50% { 
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.5), 
+                        0 0 60px rgba(139, 92, 246, 0.25),
+                        inset 0 0 30px rgba(255, 255, 255, 0.15);
+          }
+        }
+        @keyframes float-elegant {
+          0%, 100% { transform: translateY(0px) rotate(-3deg); }
+          50% { transform: translateY(-6px) rotate(-3deg); }
+        }
+        @keyframes border-dance {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes dot-pulse {
+          0%, 100% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.3); opacity: 0.7; }
+        }
+        .shimmer-text {
+          background: linear-gradient(
+            90deg, 
+            #1f1f1f 0%, 
+            #6b21a8 20%,
+            #a855f7 40%, 
+            #fbbf24 50%,
+            #a855f7 60%,
+            #6b21a8 80%,
+            #1f1f1f 100%
+          );
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: shimmer 4s linear infinite;
+        }
+        .badge-luxury {
+          animation: float-elegant 4s ease-in-out infinite, pulse-glow 3s ease-in-out infinite;
+        }
+        .border-animated {
+          background: linear-gradient(90deg, #fbbf24, #a855f7, #6366f1, #a855f7, #fbbf24);
+          background-size: 300% 100%;
+          animation: border-dance 4s ease infinite;
+        }
+        .dot-animate {
+          animation: dot-pulse 2s ease-in-out infinite;
+        }
+      `}</style>
       {/* Decorative hearts */}
       <div className="absolute top-8 right-[15%] text-purple-300">
         <svg width="40" height="60" viewBox="0 0 40 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -109,15 +168,24 @@ export default function AboutMeSection() {
                 </div>
               </div>
 
-              {/* Freelance badge */}
-              <div className="absolute bottom-20 -left-6 w-20 h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-purple-400 to-indigo-500 rounded-full flex items-center justify-center shadow-lg border-2 border-purple-200 z-10">
-                <div className="text-center">
-                  <svg className="w-5 h-5 mx-auto mb-1 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  <span className="text-[7px] lg:text-[8px] font-bold uppercase tracking-tight leading-tight block text-gray-900">
-                    Disponible<br/>Freelance
+              {/* Freelance badge - Style pill élégant */}
+              <div className="absolute bottom-20 -left-6 badge-luxury z-10">
+                <div className="relative bg-white rounded-full px-5 py-2.5 lg:px-6 lg:py-3 flex items-center gap-3 shadow-xl border border-gray-200">
+                  {/* Point vert animé */}
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 shadow-lg shadow-emerald-500/50"></span>
                   </span>
+                  
+                  {/* Texte */}
+                  <div className="relative flex items-center gap-2">
+                    <span className="text-[10px] lg:text-xs font-bold uppercase tracking-wider text-gray-800">
+                      Disponible
+                    </span>
+                    <span className="text-[10px] lg:text-xs font-semibold uppercase tracking-wide text-emerald-600">
+                      Freelance
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

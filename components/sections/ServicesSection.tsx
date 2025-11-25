@@ -53,6 +53,18 @@ export default function ServicesSection() {
         'Intégration systèmes existants'
       ]
     },
+    {
+      title: 'VISUALISATION DE DONNÉES',
+      number: '5.',
+      image: '/data.jpg',
+      details: [
+        'Tableaux de bord interactifs et dynamiques',
+        'Analyse et exploration de données complexes',
+        'Rapports automatisés et KPIs personnalisés',
+        'Intégration Power BI, Tableau et Python (Pandas, Matplotlib)',
+        'Machine Learning et modèles prédictifs'
+      ]
+    },
   ];
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
