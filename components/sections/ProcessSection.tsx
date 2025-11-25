@@ -24,8 +24,8 @@ export default function ProcessSection() {
   ];
 
   return (
-    <section id="processus" className="py-16 px-6 bg-meelo-purple relative overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+    <section id="processus" className="py-16 bg-meelo-purple relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-block mb-3">

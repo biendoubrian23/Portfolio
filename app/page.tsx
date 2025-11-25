@@ -12,8 +12,8 @@ export default function Home() {
   return (
     <main className="bg-white">
       <HeroSection />
-      <ServicesSection />
       <AboutSection />
+      <ServicesSection />
       <ExperienceSection />
       <PortfolioSection />
       <StatsSection />

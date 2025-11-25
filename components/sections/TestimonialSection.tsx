@@ -33,8 +33,9 @@ export default function TestimonialSection() {
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <section className="py-16 px-6 bg-meelo-purple">
-      <div className="max-w-5xl mx-auto">
+    <section className="py-16 bg-meelo-purple">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-5xl mx-auto">
         {/* Testimonial Card */}
         <div className="bg-meelo-beige rounded-3xl p-10 border-2 border-black relative">
           {/* Stars */}
@@ -83,6 +84,7 @@ export default function TestimonialSection() {
               />
             ))}
           </div>
+        </div>
         </div>
       </div>
     </section>

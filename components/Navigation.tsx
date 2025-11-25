@@ -18,7 +18,7 @@ export default function Navigation() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-white z-50 border-b-2 border-black">
-      <div className="max-w-6xl mx-auto px-6 py-3">
+      <div className="max-w-7xl mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="text-4xl font-bold text-gray-900">

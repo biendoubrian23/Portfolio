@@ -19,8 +19,8 @@ export default function StatsSection() {
   ];
 
   return (
-    <section className="py-16 px-6 bg-white">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
         {/* CTA Button */}
         <div className="text-center mb-12">
           <button className="px-6 py-3 border-2 border-black rounded-full text-sm font-medium hover:bg-black hover:text-white transition-all duration-300">

@@ -1,74 +1,38 @@
+'use client';
+
 import Image from 'next/image';
 
 export default function AboutSection() {
   return (
-    <section id="apropos" className="py-16 px-6 bg-meelo-purple">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          {/* Left side - Image */}
-          <div className="lg:w-1/2 relative">
-            <div className="relative">
-              {/* Purple circle background */}
-              <div className="w-[380px] h-[380px] bg-[#B8A8D8] rounded-full overflow-hidden relative">
-                <Image 
-                  src="/images/image_secondaire.png" 
-                  alt="Jonathan Meelo"
-                  width={380}
-                  height={380}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-
-              {/* Badge "10+ years of work experience" */}
-              <div className="absolute top-12 -right-6 w-28 h-28 bg-white rounded-full border-2 border-black flex items-center justify-center">
-                <div className="text-center p-3">
-                  <div className="text-[7px] font-bold leading-tight">
-                    ✦ 10+ YEARS OF WORK EXPERIENCE ✦
-                  </div>
-                  <div className="text-xl mt-0.5">↗</div>
-                </div>
-              </div>
-
-              {/* Decorative wave lines */}
-              <div className="absolute -bottom-8 -left-8">
-                <svg width="100" height="80" viewBox="0 0 100 80" fill="none">
-                  <path d="M10 10C10 10 30 20 30 40C30 60 10 70 10 70" stroke="black" strokeWidth="2"/>
-                  <path d="M30 10C30 10 50 20 50 40C50 60 30 70 30 70" stroke="black" strokeWidth="2"/>
-                  <path d="M50 10C50 10 70 20 70 40C70 60 50 70 50 70" stroke="black" strokeWidth="2"/>
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          {/* Right side - Content */}
+    <section id="apropos" className="pt-[114px] pb-2 bg-white relative border-t-2 border-black">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="relative">
           <div className="lg:w-1/2">
-            <div className="inline-block mb-4">
-              <span className="px-3 py-1.5 border-2 border-black rounded-full text-xs font-medium bg-white">
-                ✦ À PROPOS
-              </span>
-            </div>
-
-            <h2 className="text-4xl font-bold mb-4">
-              En savoir plus sur moi
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4 uppercase leading-tight">
+              CE QUE JE PEUX FAIRE POUR VOUS
             </h2>
 
-            <p className="text-base mb-4 text-gray-800">
-              Je suis Jonathan Meelo, designer de produits basé à Londres. Je suis passionné par mon travail au quotidien.
+            <p className="text-lg mb-6 text-gray-600 leading-relaxed">
+              En tant que développeur full-stack, je suis un créateur d&apos;expériences numériques, créant des solutions qui résolvent des vrais problèmes business et stimulent l&apos;innovation.
             </p>
+          </div>
 
-            <p className="text-gray-700 text-sm leading-relaxed mb-6">
-              Mon parcours dans ce domaine dynamique et en constante évolution témoigne de ma passion pour la création d&apos;expériences utilisateur pertinentes, l&apos;exploitation des technologies et le dépassement audacieux des limites de la créativité numérique. J&apos;excelle en transformant les idées en designs intuitifs et percutants.
-            </p>
-
-            <button className="px-6 py-3 border-2 border-black rounded-full text-sm font-medium bg-white hover:bg-black hover:text-white transition-all duration-300">
-              En savoir plus sur moi
-            </button>
+          {/* Right side - Image inclinée (position absolue pour ne pas affecter le layout) */}
+          <div className="hidden lg:block absolute right-[12%] top-0 z-10">
+            <div className="relative" style={{transform: 'rotate(8deg)'}}>
+              <div className="w-[320px] h-[500px] rounded-[50px] overflow-hidden relative border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+                <Image 
+                  src="/image_droite.jpg" 
+                  alt="Workspace"
+                  width={320}
+                  height={500}
+                  className="object-cover w-full h-full"
+                  priority
+                />
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Decorative hearts */}
-        <div className="absolute right-20 top-10 text-4xl">♡</div>
-        <div className="absolute right-32 top-24 text-3xl">♡</div>
       </div>
     </section>
   );

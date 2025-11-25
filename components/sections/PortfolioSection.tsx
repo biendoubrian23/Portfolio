@@ -27,8 +27,8 @@ export default function PortfolioSection() {
   ];
 
   return (
-    <section id="portefeuille" className="py-16 px-6 bg-white">
-      <div className="max-w-6xl mx-auto">
+    <section id="portefeuille" className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-block mb-3">
