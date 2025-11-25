@@ -1,0 +1,24 @@
+# Robots.txt pour Brian Biendou Portfolio
+# https://brianbiendou.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://brianbiendou.com/sitemap.xml
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+
+# Yahoo
+User-agent: Slurp
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /

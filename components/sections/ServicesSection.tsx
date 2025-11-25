@@ -79,13 +79,13 @@ export default function ServicesSection() {
                   onClick={() => setOpenService(openService === index ? null : index)}
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className={`text-base lg:text-lg font-bold transition-colors duration-300 ${
+                    <h3 className={`text-xl lg:text-2xl font-bold transition-colors duration-300 ${
                         hoveredService === index ? 'text-blue-600' : 'text-black'
                       }`}>
                       <span className="mr-2">{service.number}</span>
                       {service.title}
                     </h3>
-                    <button className="text-lg transition-transform duration-300">
+                    <button className="text-2xl transition-transform duration-300">
                       {openService === index ? '∧' : '∨'}
                     </button>
                   </div>

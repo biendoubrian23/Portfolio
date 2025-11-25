@@ -27,9 +27,9 @@ export default function HeroSection() {
             Je développe des Sites Internets, Chatbots IA, App Mobiles qui résolvent des vrais Problèmes Business
           </p>
           
-          <button className="px-7 py-3.5 border-2 border-black rounded-2xl text-base font-semibold hover:bg-black hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" style={{animation: 'fadeInUp 1s ease-out 0.6s both'}}>
+          <a href="#portefeuille" className="inline-block px-7 py-3.5 border-2 border-black rounded-2xl text-base font-semibold hover:bg-black hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" style={{animation: 'fadeInUp 1s ease-out 0.6s both'}}>
             Voir mes œuvres
-          </button>
+          </a>
         </div>
 
         {/* Right side - Image */}
