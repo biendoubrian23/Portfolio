@@ -17,25 +17,25 @@ export default function Navigation() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white z-50 border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-6 py-3">
+    <nav className="fixed top-0 left-0 right-0 bg-white z-50 border-b-2 border-black">
+      <div className="max-w-6xl mx-auto px-6 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="text-xl font-bold text-gray-900">
-            Meelo
+          <Link href="/" className="text-4xl font-bold text-gray-900">
+            Brian
           </Link>
 
           {/* Navigation links */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-7">
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 onClick={() => setActiveSection(item.name)}
-                className={`text-sm transition-colors ${
+                className={`text-lg font-semibold transition-colors ${
                   activeSection === item.name
-                    ? 'text-blue-600 font-medium'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'text-blue-600'
+                    : 'text-gray-900 hover:text-blue-600'
                 }`}
               >
                 {item.name}
@@ -44,15 +44,15 @@ export default function Navigation() {
           </div>
 
           {/* Social icons */}
-          <div className="flex items-center space-x-2">
-            <button className="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors">
-              <span className="text-base">𝕏</span>
+          <div className="flex items-center space-x-4">
+            <button className="w-12 h-12 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors">
+              <span className="text-xl">𝕏</span>
             </button>
-            <button className="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors">
-              <span className="text-base">⚙️</span>
+            <button className="w-12 h-12 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors">
+              <span className="text-xl">⚙️</span>
             </button>
-            <button className="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors">
-              <span className="text-base">📷</span>
+            <button className="w-12 h-12 rounded-full border-2 border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors">
+              <span className="text-xl">📷</span>
             </button>
           </div>
         </div>

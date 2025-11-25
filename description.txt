@@ -1,0 +1,81 @@
+ma description:
+je suis une personne extremement passionné
+j'ai fait des etudes d'ingénieur et je suis ingenieur en système embarqué, j'ai travaillé un an chez Airbus omme ingénieur Methodes et outils 
+voici mon cv
+Développeur Méthodes et Outils pour Systèmes Embarqués
+Depuis septembre 2024 Sopra Steria Toulouse
+Automatisation logicielle :
+Développement de scripts Python/Bash dans un environnement DO178C pour automatiser la génération et la vérification logicielle.
+Intégration d’une usine logicielle (Jenkins, Gradle, GitLab CI) pour le
+packaging et le déploiement des bundles embarqués.
+Développement logiciel embarqué :
+Implémentation de modules C++ orientés objet pour la gestion des
+composants avioniques, améliorant la réutilisation et la maintenance.
+Développement en C bas niveau pour les schedulers, la gestion des
+ressources matérielles et la communication inter-partitions.
+Spécifications et validation :
+Rédaction de spécifications techniques et structuration logicielle (cycle
+en V).
+Tests unitaires, intégration et validation sur bancs physiques avec
+outils d’analyse statique.
+Gestion des artefacts normés (SDP, SVP, SVCL) et traçabilité DO-178C.
+Support et analyse :
+Diagnostic et résolution d’anomalies en phase d’intégration, en lien
+avec les équipes système et validation.
+
+
+maintenant je me suis reconverti en Data Analyst /Data Scientist
+Data Engineer / Data Analyst
+Depuis septembre 2024 Sopra Steria Toulouse
+Pipeline de données et automatisation :
+Développement de pipelines ETL (Python & Airflow) pour extraire,
+transformer et centraliser les données avioniques massives vers des
+entrepôts (PostgreSQL, Redshift).
+Intégration CI/CD (Jenkins, GitLab CI) pour automatiser la collecte, le
+parsing de logs/JSON et la génération de rapports standardisés.
+Traitement et analyse de données :
+Nettoyage et agrégation de séries temporelles multi-capteurs :
+resampling, calcul d'indicateurs statistiques et détection d'anomalies.
+Analyse exploratoire (EDA) pour identifier patterns et tendances, réduisant
+de 25% le temps de diagnostic.
+Visualisation et gouvernance :
+Création de dashboards interactifs (Tableau, Power BI) pour monitorer les
+KPIs critiques temps réel.
+Documentation technique et processus de data quality conformes aux
+normes DO-178C.
+Collaboration inter-équipes pour aligner analyses et besoins
+opérationnels.
+Environnement technique : Python (Pandas, Scikit-learn), SQL, Airflow, Git,
+Jenkins, Tableau, Power BI, Docker, Linux
+
+De juillet 2024 à septembre 2024 Weenav Roncq
+Collecte et traitement de données IoT :
+Ingestion et parsing de trames CAN/J1939 : extraction, transformation vers
+formats exploitables (CSV/Parquet) et structuration des flux temps réel via
+Python.
+Pipeline de pré-traitement : filtrage, agrégation, calcul d'indicateurs temps
+réel et transmission sécurisée vers data warehouse cloud (AWS S3/RDS).
+Analyse et visualisation :
+Création de dashboards (Grafana) pour monitoring temps réel des
+métriques capteurs et détection de comportements anormaux.
+Validation sur cible : génération de tests, mesure de latence, optimisation
+réduisant de 30% le temps de réponse.
+
+
+maintenant chez travail chez Messages une société a Toulouse et je m'occupe de developper un chatbot intelligent en RAG sur leur 8 sites internet (coollibri (en 03 sites car 3 langues), jedecore, jimprimeenfrance et autres) et le chatbot est connecter a la base de donnée de l'entreprise pour savoir ou en est les commandes des clients et tout 
+
+niveau projet personnel j'ai fait plein de truc
+j'ai developper une application mobile que je dois lancer au cameroun qui est une sorte d'application comme SNCF mais pour le cameroun que tous les agences pourront utiliser et mettrons les  trajets dessus et les clients veront les trajets et les agences liées et pourrons payer et reserver leur place
+donc je developpe des application mobile en react native et supabase
+ensuite j'ai fait un site internet vitrine pour un client qui s'appelle matricxconsulting.com
+j'ai develpper son site vitrine de A à Z en rendant chaque module modifiable par lui avec sanity, j'ai ajouter des crm comme brevo pour tout ce qui est newsletter et campagne marketing
+
+j'ai developper un autre site qui s'appelle ordo
+c'est un organisateur de mail qui se connecte a gmail et qui recupère des mails les organise par categorie et il y'a un chatbot dessus qui est branché et qui connait tous les maisl qui peuvent faire un resumé des mails imortant que tu a recu et autre 
+
+j'ai developper un autre site internet qui est un raccourciseur et un tracker de lien, qui peut voir le nombre de voir qu'il aété cliquer, nombre du'itlisaeur unique, le pays la ville le quartier, le device , le systeme d'exploitation, bref pleins de metrique
+
+et en plus j'ai developper un add in outlook qui permet de repondre facilement au mail ouvert avec un RAG en arriere plan qui a une bas ede connaissance.
+
+de plus je suis en pour parler avec finexs voyage une sopciete de voyage au cameroun pour leur developper une solution CRM.
+ i develop 3D visuals, user interfaces and web applications

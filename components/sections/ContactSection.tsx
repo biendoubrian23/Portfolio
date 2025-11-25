@@ -1,7 +1,7 @@
 export default function ContactSection() {
   return (
     <section id="tarification" className="py-16 px-6 bg-white">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="flex flex-col lg:flex-row gap-12 items-center">
           {/* Left side - Content */}
           <div className="lg:w-1/2">
