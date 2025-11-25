@@ -47,10 +47,10 @@ export default function ServicesSection() {
       number: '4.',
       image: '/crm.jpeg',
       details: [
-        'Intégration Brevo, HubSpot',
-        'Automatisation marketing et newsletters',
-        'Gestion campagnes et analytics',
-        'Tableaux de bord personnalisés'
+        'Développement CRM sur mesure',
+        'APIs et connecteurs personnalisés',
+        'Architecture back-end scalable',
+        'Intégration systèmes existants'
       ]
     },
   ];
@@ -85,9 +85,11 @@ export default function ServicesSection() {
                       <span className="mr-2">{service.number}</span>
                       {service.title}
                     </h3>
-                    <button className="text-2xl transition-transform duration-300">
-                      {openService === index ? '∧' : '∨'}
-                    </button>
+                    <div className={`w-8 h-8 rounded-full border-2 border-black flex items-center justify-center transition-all duration-300 ${openService === index ? 'bg-black rotate-45' : 'bg-white'}`}>
+                      <svg className={`w-4 h-4 transition-colors duration-300 ${openService === index ? 'text-white' : 'text-black'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+                      </svg>
+                    </div>
                   </div>
 
                   {/* Image qui suit la souris au survol */}

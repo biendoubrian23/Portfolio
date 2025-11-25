@@ -1,21 +1,55 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState('Accueil');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { name: 'Accueil', href: '#maison' },
-    { name: 'Services', href: '#apropos' },
-    { name: 'A propos', href: '#aboutme' },
-    { name: 'Mes Expériences', href: '#experiences' },
-    { name: 'Mes Projets', href: '#portefeuille' },
-    { name: 'Ma Stack', href: '#techstack' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Accueil', href: '#maison', id: 'maison' },
+    { name: 'Services', href: '#apropos', id: 'apropos' },
+    { name: 'A propos', href: '#aboutme', id: 'aboutme' },
+    { name: 'Mes Expériences', href: '#experiences', id: 'experiences' },
+    { name: 'Mes Projets', href: '#portefeuille', id: 'portefeuille' },
+    { name: 'Ma Stack', href: '#techstack', id: 'techstack' },
+    { name: 'Formation', href: '#formation', id: 'formation' },
+    { name: 'Contact', href: '#contact', id: 'contact' },
   ];
+
+  // Détection de la section visible au scroll
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px', // Zone de détection au milieu-haut de l'écran
+      threshold: 0
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+          const navItem = navItems.find(item => item.id === sectionId);
+          if (navItem) {
+            setActiveSection(navItem.name);
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observer toutes les sections
+    navItems.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleNavClick = (name: string) => {
     setActiveSection(name);
