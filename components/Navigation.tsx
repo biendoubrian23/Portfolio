@@ -2,24 +2,36 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 const navItems = [
-  { name: 'Accueil', href: '#maison', id: 'maison' },
-  { name: 'Services', href: '#apropos', id: 'apropos' },
-  { name: 'A Propos', href: '#aboutme', id: 'aboutme' },
-  { name: 'Mes Expériences', href: '#experiences', id: 'experiences' },
-  { name: 'Mes Projets', href: '#portefeuille', id: 'portefeuille' },
-  { name: 'Ma Stack', href: '#techstack', id: 'techstack' },
-  { name: 'Certifications', href: '#certifications', id: 'certifications' },
-  { name: 'Contact', href: '#contact', id: 'contact' },
+  { name: 'Accueil', href: '#maison', id: 'maison', isPage: false },
+  { name: 'Services', href: '#apropos', id: 'apropos', isPage: false },
+  { name: 'A Propos', href: '#aboutme', id: 'aboutme', isPage: false },
+  { name: 'Mes Expériences', href: '#experiences', id: 'experiences', isPage: false },
+  { name: 'Mes Projets', href: '#portefeuille', id: 'portefeuille', isPage: false },
+  { name: 'Ma Stack', href: '#techstack', id: 'techstack', isPage: false },
+  { name: 'Certifications', href: '#certifications', id: 'certifications', isPage: false },
+  { name: 'Blog', href: '/blog', id: 'blog', isPage: true },
+  { name: 'Contact', href: '#contact', id: 'contact', isPage: false },
 ];
 
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState('Accueil');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Check if we're on the blog page
+  const isBlogPage = pathname?.startsWith('/blog');
 
   // Détection de la section visible au scroll
   useEffect(() => {
+    // Skip observer on blog pages
+    if (isBlogPage) {
+      setActiveSection('Blog');
+      return;
+    }
+
     const observerOptions = {
       root: null,
       rootMargin: '-20% 0px -70% 0px', // Zone de détection au milieu-haut de l'écran
@@ -42,14 +54,16 @@ export default function Navigation() {
 
     // Observer toutes les sections
     navItems.forEach((item) => {
-      const element = document.getElementById(item.id);
-      if (element) {
-        observer.observe(element);
+      if (!item.isPage) {
+        const element = document.getElementById(item.id);
+        if (element) {
+          observer.observe(element);
+        }
       }
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [isBlogPage]);
 
   const handleNavClick = (name: string) => {
     setActiveSection(name);
@@ -67,20 +81,28 @@ export default function Navigation() {
 
           {/* Navigation links - Desktop only */}
           <div className="hidden lg:flex items-center space-x-7">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setActiveSection(item.name)}
-                className={`text-lg font-semibold transition-colors ${
-                  activeSection === item.name
-                    ? 'text-blue-600'
-                    : 'text-gray-900 hover:text-blue-600'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              // For anchor links when on blog page, redirect to home with anchor
+              const href = item.isPage ? item.href : (isBlogPage ? `/${item.href}` : item.href);
+              const isActive = item.isPage 
+                ? isBlogPage 
+                : activeSection === item.name;
+              
+              return (
+                <Link
+                  key={item.name}
+                  href={href}
+                  onClick={() => !item.isPage && setActiveSection(item.name)}
+                  className={`text-lg font-semibold transition-colors ${
+                    isActive
+                      ? 'text-blue-600'
+                      : 'text-gray-900 hover:text-blue-600'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Right side - LinkedIn + Burger Menu */}
@@ -109,20 +131,27 @@ export default function Navigation() {
       {/* Mobile & Tablet Menu */}
       <div className={`lg:hidden absolute top-full left-0 right-0 bg-white border-b-2 border-black shadow-lg transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
         <div className="px-6 py-4 space-y-1">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              onClick={() => handleNavClick(item.name)}
-              className={`block py-3 px-4 text-lg font-semibold rounded-lg transition-colors ${
-                activeSection === item.name
-                  ? 'text-blue-600 bg-blue-50'
-                  : 'text-gray-900 hover:text-blue-600 hover:bg-gray-50'
-              }`}
-            >
-              {item.name}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const href = item.isPage ? item.href : (isBlogPage ? `/${item.href}` : item.href);
+            const isActive = item.isPage 
+              ? isBlogPage 
+              : activeSection === item.name;
+            
+            return (
+              <Link
+                key={item.name}
+                href={href}
+                onClick={() => handleNavClick(item.name)}
+                className={`block py-3 px-4 text-lg font-semibold rounded-lg transition-colors ${
+                  isActive
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-gray-900 hover:text-blue-600 hover:bg-gray-50'
+                }`}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </nav>
