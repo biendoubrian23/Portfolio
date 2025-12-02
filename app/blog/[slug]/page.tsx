@@ -385,26 +385,28 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               remarkPlugins={[remarkGfm]}
               components={{
                 // Images avec figure et caption
-                img: ({ src, alt }) => (
-                  <figure className="my-12">
-                    <div className="relative w-full h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
-                      {src && (
+                img: ({ src, alt }) => {
+                  const imgSrc = typeof src === 'string' ? src : '';
+                  if (!imgSrc) return null;
+                  return (
+                    <figure className="my-12">
+                      <div className="relative w-full h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
                         <Image
-                          src={src}
+                          src={imgSrc}
                           alt={alt || 'Image de l\'article'}
                           fill
                           className="object-cover"
                           sizes="(max-width: 768px) 100vw, 800px"
                         />
+                      </div>
+                      {alt && !alt.includes('Image illustrative') && (
+                        <figcaption className="text-center text-sm text-gray-500 mt-4 italic">
+                          {alt}
+                        </figcaption>
                       )}
-                    </div>
-                    {alt && !alt.includes('Image illustrative') && (
-                      <figcaption className="text-center text-sm text-gray-500 mt-4 italic">
-                        {alt}
-                      </figcaption>
-                    )}
-                  </figure>
-                ),
+                    </figure>
+                  );
+                },
                 // Titres H2 avec bordure bleue à gauche (style pro)
                 h2: ({ children }) => (
                   <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-16 mb-8 pl-4 border-l-4 border-blue-500">
@@ -567,21 +569,23 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <ReactMarkdown 
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  img: ({ src, alt }) => (
-                    <figure className="my-8">
-                      <div className="relative w-full h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
-                        {src && (
+                  img: ({ src, alt }) => {
+                    const imgSrc = typeof src === 'string' ? src : '';
+                    if (!imgSrc) return null;
+                    return (
+                      <figure className="my-8">
+                        <div className="relative w-full h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
                           <Image
-                            src={src}
+                            src={imgSrc}
                             alt={alt || 'Image de l\'article'}
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, 800px"
                           />
-                        )}
-                      </div>
-                    </figure>
-                  ),
+                        </div>
+                      </figure>
+                    );
+                  },
                   h2: ({ children }) => (
                     <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6 pb-3 border-b-2 border-blue-500">
                       {children}
