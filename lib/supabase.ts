@@ -21,6 +21,7 @@ export interface BlogPost {
   excerpt: string | null
   content: string
   cover_image_url: string | null
+  content_image_url: string | null  // Image du milieu de l'article
   meta_title: string | null
   meta_description: string | null
   keywords: string[] | null

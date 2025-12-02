@@ -98,6 +98,36 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     ? format(new Date(post.published_at), 'dd MMMM yyyy', { locale: fr })
     : null
 
+  // Vérifier si content_image_url existe et n'est pas déjà dans le contenu
+  const hasContentImageInMarkdown = post.content_image_url && post.content.includes(post.content_image_url)
+  const showSeparateContentImage = post.content_image_url && !hasContentImageInMarkdown
+
+  // Diviser le contenu en 2 parties pour insérer l'image au milieu
+  let contentPart1 = post.content
+  let contentPart2 = ''
+  
+  if (showSeparateContentImage) {
+    // Trouver le 2ème titre ## pour couper le contenu
+    const lines = post.content.split('\n')
+    let h2Count = 0
+    let splitIndex = -1
+    
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].trim().startsWith('## ')) {
+        h2Count++
+        if (h2Count === 2) {
+          splitIndex = i
+          break
+        }
+      }
+    }
+    
+    if (splitIndex > 0) {
+      contentPart1 = lines.slice(0, splitIndex).join('\n')
+      contentPart2 = lines.slice(splitIndex).join('\n')
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gray-50 pt-24 pb-16">
       {/* View Tracker - compte les vues */}
@@ -197,10 +227,220 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {/* Content */}
         <div className="bg-white rounded-2xl shadow-lg p-6 md:p-10 mb-8">
-          <div className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-blue-600 prose-strong:text-gray-900 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-900 prose-pre:text-gray-100">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {post.content}
+          <div className="prose prose-lg max-w-none">
+            {/* Première partie du contenu (ou tout si pas d'image séparée) */}
+            <ReactMarkdown 
+              remarkPlugins={[remarkGfm]}
+              components={{
+                // Images avec figure et caption
+                img: ({ src, alt }) => (
+                  <figure className="my-8">
+                    <div className="relative w-full h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
+                      {src && (
+                        <Image
+                          src={src}
+                          alt={alt || 'Image de l\'article'}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 800px"
+                        />
+                      )}
+                    </div>
+                    {alt && !alt.includes('Image illustrative') && (
+                      <figcaption className="text-center text-sm text-gray-500 mt-3 italic">
+                        {alt}
+                      </figcaption>
+                    )}
+                  </figure>
+                ),
+                // Titres H2 avec bordure et espacement
+                h2: ({ children }) => (
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6 pb-3 border-b-2 border-blue-500">
+                    {children}
+                  </h2>
+                ),
+                // Titres H3
+                h3: ({ children }) => (
+                  <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mt-8 mb-4">
+                    {children}
+                  </h3>
+                ),
+                // Paragraphes aérés
+                p: ({ children }) => (
+                  <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                    {children}
+                  </p>
+                ),
+                // Texte en gras
+                strong: ({ children }) => (
+                  <strong className="font-bold text-gray-900">
+                    {children}
+                  </strong>
+                ),
+                // Texte en italique - style citation
+                em: ({ children }) => {
+                  // Vérifier si c'est une citation (commence par « ou ")
+                  const text = String(children);
+                  if (text.startsWith('«') || text.startsWith('"') || text.startsWith('Crédit')) {
+                    return (
+                      <span className="block my-6 pl-4 border-l-4 border-blue-500 bg-blue-50 py-3 pr-4 rounded-r-lg italic text-gray-600">
+                        {children}
+                      </span>
+                    );
+                  }
+                  return <em className="italic text-gray-600">{children}</em>;
+                },
+                // Listes à puces stylées
+                ul: ({ children }) => (
+                  <ul className="my-6 space-y-3">
+                    {children}
+                  </ul>
+                ),
+                li: ({ children }) => (
+                  <li className="flex items-start gap-3 text-gray-700">
+                    <span className="text-blue-500 mt-1.5">•</span>
+                    <span className="flex-1">{children}</span>
+                  </li>
+                ),
+                // Listes numérotées
+                ol: ({ children }) => (
+                  <ol className="my-6 space-y-3 list-decimal list-inside">
+                    {children}
+                  </ol>
+                ),
+                // Liens
+                a: ({ href, children }) => (
+                  <a 
+                    href={href} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:text-blue-800 underline decoration-blue-300 hover:decoration-blue-600 transition-colors"
+                  >
+                    {children}
+                  </a>
+                ),
+                // Blocs de code
+                code: ({ children, className }) => {
+                  const isBlock = className?.includes('language-');
+                  if (isBlock) {
+                    return (
+                      <code className="block bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm">
+                        {children}
+                      </code>
+                    );
+                  }
+                  return (
+                    <code className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm font-mono">
+                      {children}
+                    </code>
+                  );
+                },
+                // Citations blockquote
+                blockquote: ({ children }) => (
+                  <blockquote className="my-8 pl-6 border-l-4 border-blue-500 bg-gradient-to-r from-blue-50 to-transparent py-4 pr-4 rounded-r-lg">
+                    <div className="text-gray-700 italic text-lg">
+                      {children}
+                    </div>
+                  </blockquote>
+                ),
+                // Séparateur horizontal
+                hr: () => (
+                  <hr className="my-10 border-t-2 border-gray-200" />
+                ),
+              }}
+            >
+              {showSeparateContentImage ? contentPart1 : post.content}
             </ReactMarkdown>
+
+            {/* Image du milieu (si content_image_url existe et n'est pas dans le Markdown) */}
+            {showSeparateContentImage && post.content_image_url && (
+              <figure className="my-10">
+                <div className="relative w-full h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
+                  <Image
+                    src={post.content_image_url}
+                    alt="Illustration de l'article"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 800px"
+                  />
+                </div>
+                <figcaption className="text-center text-sm text-gray-500 mt-3 italic">
+                  📷 Image via Unsplash
+                </figcaption>
+              </figure>
+            )}
+
+            {/* Deuxième partie du contenu (si on a divisé) */}
+            {showSeparateContentImage && contentPart2 && (
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  img: ({ src, alt }) => (
+                    <figure className="my-8">
+                      <div className="relative w-full h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
+                        {src && (
+                          <Image
+                            src={src}
+                            alt={alt || 'Image de l\'article'}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 800px"
+                          />
+                        )}
+                      </div>
+                    </figure>
+                  ),
+                  h2: ({ children }) => (
+                    <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6 pb-3 border-b-2 border-blue-500">
+                      {children}
+                    </h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mt-8 mb-4">
+                      {children}
+                    </h3>
+                  ),
+                  p: ({ children }) => (
+                    <p className="text-gray-700 text-lg leading-relaxed mb-6">
+                      {children}
+                    </p>
+                  ),
+                  strong: ({ children }) => (
+                    <strong className="font-bold text-gray-900">{children}</strong>
+                  ),
+                  em: ({ children }) => {
+                    const text = String(children);
+                    if (text.startsWith('«') || text.startsWith('"') || text.startsWith('Crédit')) {
+                      return (
+                        <span className="block my-6 pl-4 border-l-4 border-blue-500 bg-blue-50 py-3 pr-4 rounded-r-lg italic text-gray-600">
+                          {children}
+                        </span>
+                      );
+                    }
+                    return <em className="italic text-gray-600">{children}</em>;
+                  },
+                  ul: ({ children }) => <ul className="my-6 space-y-3">{children}</ul>,
+                  li: ({ children }) => (
+                    <li className="flex items-start gap-3 text-gray-700">
+                      <span className="text-blue-500 mt-1.5">•</span>
+                      <span className="flex-1">{children}</span>
+                    </li>
+                  ),
+                  a: ({ href, children }) => (
+                    <a href={href} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">
+                      {children}
+                    </a>
+                  ),
+                  blockquote: ({ children }) => (
+                    <blockquote className="my-8 pl-6 border-l-4 border-blue-500 bg-gradient-to-r from-blue-50 to-transparent py-4 pr-4 rounded-r-lg">
+                      <div className="text-gray-700 italic text-lg">{children}</div>
+                    </blockquote>
+                  ),
+                }}
+              >
+                {contentPart2}
+              </ReactMarkdown>
+            )}
           </div>
         </div>
 
