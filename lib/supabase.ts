@@ -35,6 +35,10 @@ export interface BlogPost {
   published_at: string | null
   scheduled_for: string | null
   views_count: number
+  likes_count: number
+  dislikes_count: number
+  comments_count: number
+  shares_count: number
   reading_time_minutes: number | null
   created_at: string
   updated_at: string

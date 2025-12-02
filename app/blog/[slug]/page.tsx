@@ -9,6 +9,7 @@ import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 import ShareButtons from '@/components/ShareButtons'
 import ViewTracker from '@/components/ViewTracker'
+import { FloatingActionBar } from '@/components/blog'
 
 /**
  * Nettoie et formate le contenu Markdown pour un affichage professionnel
@@ -281,9 +282,21 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 pt-24 pb-16">
+    <main className="min-h-screen bg-gray-50 pt-24 pb-16 lg:pb-16">
       {/* View Tracker - compte les vues */}
       <ViewTracker postId={post.id} />
+      
+      {/* Barre d'actions flottante (like, dislike, commentaires, partage) */}
+      <FloatingActionBar 
+        postId={post.id}
+        postTitle={post.title}
+        postUrl={`https://brian-biendou.com/blog/${post.slug}`}
+        postExcerpt={post.excerpt || ''}
+        initialLikes={post.likes_count || 0}
+        initialDislikes={post.dislikes_count || 0}
+        initialComments={post.comments_count || 0}
+        initialShares={post.shares_count || 0}
+      />
       
       {/* Breadcrumb */}
       <nav className="max-w-4xl mx-auto px-6 mb-8">
@@ -713,7 +726,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       </article>
 
       {/* Back to blog */}
-      <div className="max-w-4xl mx-auto px-6 mt-12 text-center">
+      <div className="max-w-4xl mx-auto px-6 mt-12 mb-24 lg:mb-0 text-center">
         <Link
           href="/blog"
           className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold"
