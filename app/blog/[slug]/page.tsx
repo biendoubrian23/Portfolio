@@ -10,6 +10,155 @@ import { fr } from 'date-fns/locale'
 import ShareButtons from '@/components/ShareButtons'
 import ViewTracker from '@/components/ViewTracker'
 
+/**
+ * Nettoie et formate le contenu Markdown pour un affichage professionnel
+ * - Extrait le contenu si c'est du JSON mal parsé
+ * - Améliore la structure des paragraphes
+ * - Formate les citations avec guillemets français
+ * - Ajoute des espacements appropriés
+ */
+function cleanAndFormatContent(rawContent: string): string {
+  if (!rawContent) return ''
+  
+  let content = rawContent
+
+  // 1. Remplacer les \n littéraux par de vrais retours à la ligne
+  content = content.replace(/\\n/g, '\n')
+  
+  // 2. Détecter si c'est un JSON mal parsé et extraire le vrai contenu
+  const jsonKeyPattern = /"(title|meta_description|keywords|excerpt|content|category|tags|sources|reading_time_minutes|focus_keyword)":/
+  
+  if (jsonKeyPattern.test(content)) {
+    const contentMatch = content.match(/"content"\s*:\s*"([\s\S]*?)(?:"\s*,\s*"|"\s*})/);
+    if (contentMatch && contentMatch[1]) {
+      content = contentMatch[1]
+        .replace(/\\n/g, '\n')
+        .replace(/\\"/g, '"')
+        .replace(/\\\\/g, '\\')
+    } else {
+      content = content
+        .replace(/^\s*"(title|meta_description|keywords|excerpt|category|tags|sources|reading_time_minutes|focus_keyword)"\s*:.*$/gm, '')
+        .replace(/^\s*[{}\[\]]\s*$/gm, '')
+        .replace(/^\s*"content"\s*:\s*"/gm, '')
+        .replace(/",?\s*$/gm, '')
+    }
+  }
+
+  // 3. Nettoyer les artefacts JSON
+  content = content
+    .replace(/\{\s*"title"[\s\S]*?"content"\s*:\s*"/g, '')
+    .replace(/^\s*"[a-z_]+"\s*:\s*(\[.*?\]|".*?"),?\s*$/gim, '')
+    .replace(/"\s*,?\s*$/gm, '')
+    .replace(/\n{4,}/g, '\n\n')
+    .trim()
+
+  // 4. Améliorer la structure Markdown
+  content = content
+    // Supprimer le titre # principal (déjà affiché dans le header)
+    .replace(/^#\s+[^\n]+\n+/, '')
+    // Espacer les titres ##
+    .replace(/([^\n])\n(#{2,})/g, '$1\n\n$2')
+    .replace(/(#{2,}[^\n]+)\n([^\n#])/g, '$1\n\n$2')
+    // Espacer les listes
+    .replace(/([^\n])\n([-*]\s)/g, '$1\n\n$2')
+    // Espacer les images
+    .replace(/([^\n])\n(!\[)/g, '$1\n\n$2')
+    .replace(/(\*Crédit[^\n]+)\n([^\n])/g, '$1\n\n$2')
+
+  // 5. AMÉLIORATION DU FORMATAGE DES PARAGRAPHES
+  const lines = content.split('\n')
+  const improvedLines: string[] = []
+  let inList = false
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]
+    const trimmed = line.trim()
+    
+    // Ignorer les lignes vides mais les conserver pour l'espacement
+    if (!trimmed) {
+      improvedLines.push('')
+      inList = false
+      continue
+    }
+    
+    // Détecter les listes
+    if (trimmed.startsWith('- ') || trimmed.startsWith('* ') || trimmed.match(/^\d+\.\s/)) {
+      inList = true
+    }
+    
+    // Détecter les titres (ne pas modifier)
+    if (trimmed.startsWith('#')) {
+      improvedLines.push(line)
+      continue
+    }
+    
+    // Détecter les images (ne pas modifier)
+    if (trimmed.startsWith('![') || trimmed.startsWith('*Crédit')) {
+      improvedLines.push(line)
+      continue
+    }
+    
+    // Convertir les guillemets anglais en français pour les citations
+    let processedLine = line
+      .replace(/"([^"]+)"/g, '« $1 »')
+      .replace(/"\s*([^"]+)\s*"/g, '« $1 »')
+    
+    // Améliorer les citations longues (commençant par « et sur plusieurs phrases)
+    if (processedLine.includes('« ') && processedLine.length > 150) {
+      // C'est probablement une citation importante
+      processedLine = processedLine.replace(/^(.*)$/, '*$1*')
+    }
+    
+    improvedLines.push(processedLine)
+  }
+  
+  content = improvedLines.join('\n')
+
+  // 6. S'assurer que chaque paragraphe est bien séparé
+  // Diviser les très longs paragraphes (plus de 500 caractères sans saut de ligne)
+  const paragraphs = content.split(/\n\n+/)
+  const finalParagraphs: string[] = []
+  
+  for (const para of paragraphs) {
+    const trimmedPara = para.trim()
+    if (!trimmedPara) continue
+    
+    // Ne pas toucher aux titres, listes, images
+    if (trimmedPara.startsWith('#') || 
+        trimmedPara.startsWith('-') || 
+        trimmedPara.startsWith('*') ||
+        trimmedPara.startsWith('![') ||
+        trimmedPara.match(/^\d+\./)) {
+      finalParagraphs.push(trimmedPara)
+      continue
+    }
+    
+    // Si le paragraphe est très long, essayer de le diviser sur les phrases
+    if (trimmedPara.length > 600 && !trimmedPara.includes('\n')) {
+      // Diviser sur les points suivis d'une majuscule
+      const sentences = trimmedPara.split(/(?<=[.!?])\s+(?=[A-ZÀ-ÿ])/)
+      if (sentences.length >= 4) {
+        // Regrouper en paragraphes de 2-3 phrases
+        const mid = Math.ceil(sentences.length / 2)
+        finalParagraphs.push(sentences.slice(0, mid).join(' '))
+        finalParagraphs.push(sentences.slice(mid).join(' '))
+        continue
+      }
+    }
+    
+    finalParagraphs.push(trimmedPara)
+  }
+  
+  content = finalParagraphs.join('\n\n')
+
+  // 7. Vérification finale
+  if (content.trim().length === 0) {
+    return rawContent
+  }
+
+  return content
+}
+
 // Générer les pages statiques
 export async function generateStaticParams() {
   const posts = await getPublishedPosts()
@@ -98,17 +247,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     ? format(new Date(post.published_at), 'dd MMMM yyyy', { locale: fr })
     : null
 
+  // ✨ Nettoyer et formater le contenu
+  const cleanedContent = cleanAndFormatContent(post.content)
+
   // Vérifier si content_image_url existe et n'est pas déjà dans le contenu
-  const hasContentImageInMarkdown = post.content_image_url && post.content.includes(post.content_image_url)
+  const hasContentImageInMarkdown = post.content_image_url && cleanedContent.includes(post.content_image_url)
   const showSeparateContentImage = post.content_image_url && !hasContentImageInMarkdown
 
   // Diviser le contenu en 2 parties pour insérer l'image au milieu
-  let contentPart1 = post.content
+  let contentPart1 = cleanedContent
   let contentPart2 = ''
   
   if (showSeparateContentImage) {
     // Trouver le 2ème titre ## pour couper le contenu
-    const lines = post.content.split('\n')
+    const lines = cleanedContent.split('\n')
     let h2Count = 0
     let splitIndex = -1
     
@@ -226,15 +378,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </header>
 
         {/* Content */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-10 mb-8">
-          <div className="prose prose-lg max-w-none">
+        <div className="bg-white rounded-2xl shadow-lg p-6 md:p-12 lg:p-16 mb-8">
+          <div className="prose prose-lg max-w-none prose-headings:font-bold prose-p:text-gray-700">
             {/* Première partie du contenu (ou tout si pas d'image séparée) */}
             <ReactMarkdown 
               remarkPlugins={[remarkGfm]}
               components={{
                 // Images avec figure et caption
                 img: ({ src, alt }) => (
-                  <figure className="my-8">
+                  <figure className="my-12">
                     <div className="relative w-full h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
                       {src && (
                         <Image
@@ -247,64 +399,90 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                       )}
                     </div>
                     {alt && !alt.includes('Image illustrative') && (
-                      <figcaption className="text-center text-sm text-gray-500 mt-3 italic">
+                      <figcaption className="text-center text-sm text-gray-500 mt-4 italic">
                         {alt}
                       </figcaption>
                     )}
                   </figure>
                 ),
-                // Titres H2 avec bordure et espacement
+                // Titres H2 avec bordure bleue à gauche (style pro)
                 h2: ({ children }) => (
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6 pb-3 border-b-2 border-blue-500">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mt-16 mb-8 pl-4 border-l-4 border-blue-500">
                     {children}
                   </h2>
                 ),
                 // Titres H3
                 h3: ({ children }) => (
-                  <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mt-8 mb-4">
+                  <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mt-12 mb-6">
                     {children}
                   </h3>
                 ),
-                // Paragraphes aérés
-                p: ({ children }) => (
-                  <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                    {children}
-                  </p>
-                ),
-                // Texte en gras
+                // Paragraphes aérés avec plus d'espacement
+                p: ({ children }) => {
+                  // Détecter si c'est une citation longue (contient des guillemets français)
+                  const text = String(children)
+                  const isQuote = text.startsWith('«') || (text.includes('« ') && text.includes(' »'))
+                  
+                  if (isQuote && text.length > 100) {
+                    return (
+                      <blockquote className="my-10 pl-6 pr-4 py-4 border-l-4 border-blue-500 bg-gray-50 rounded-r-lg">
+                        <p className="text-gray-700 text-lg md:text-xl leading-relaxed italic">
+                          {children}
+                        </p>
+                      </blockquote>
+                    )
+                  }
+                  
+                  return (
+                    <p className="text-gray-700 text-lg md:text-xl leading-relaxed mb-8 text-justify">
+                      {children}
+                    </p>
+                  )
+                },
+                // Texte en gras plus visible
                 strong: ({ children }) => (
-                  <strong className="font-bold text-gray-900">
+                  <strong className="font-bold text-gray-900 bg-yellow-50 px-1 rounded">
                     {children}
                   </strong>
                 ),
-                // Texte en italique - style citation
+                // Texte en italique - style citation élégant
                 em: ({ children }) => {
-                  // Vérifier si c'est une citation (commence par « ou ")
                   const text = String(children);
-                  if (text.startsWith('«') || text.startsWith('"') || text.startsWith('Crédit')) {
+                  // Citation avec guillemets français
+                  if (text.startsWith('«') || text.startsWith('"')) {
                     return (
-                      <span className="block my-6 pl-4 border-l-4 border-blue-500 bg-blue-50 py-3 pr-4 rounded-r-lg italic text-gray-600">
+                      <span className="block my-10 pl-6 pr-4 py-5 border-l-4 border-blue-500 bg-gradient-to-r from-blue-50 to-transparent rounded-r-lg">
+                        <span className="text-gray-700 text-lg md:text-xl leading-relaxed italic block">
+                          {children}
+                        </span>
+                      </span>
+                    );
+                  }
+                  // Crédit photo
+                  if (text.startsWith('Crédit')) {
+                    return (
+                      <span className="block text-center text-sm text-gray-500 italic mt-2 mb-8">
                         {children}
                       </span>
                     );
                   }
                   return <em className="italic text-gray-600">{children}</em>;
                 },
-                // Listes à puces stylées
+                // Listes à puces stylées avec plus d'espace
                 ul: ({ children }) => (
-                  <ul className="my-6 space-y-3">
+                  <ul className="my-10 space-y-4 pl-2">
                     {children}
                   </ul>
                 ),
                 li: ({ children }) => (
-                  <li className="flex items-start gap-3 text-gray-700">
-                    <span className="text-blue-500 mt-1.5">•</span>
+                  <li className="flex items-start gap-4 text-gray-700 text-lg leading-relaxed">
+                    <span className="text-blue-500 mt-2 text-xl">•</span>
                     <span className="flex-1">{children}</span>
                   </li>
                 ),
                 // Listes numérotées
                 ol: ({ children }) => (
-                  <ol className="my-6 space-y-3 list-decimal list-inside">
+                  <ol className="my-10 space-y-4 list-decimal list-inside pl-2">
                     {children}
                   </ol>
                 ),
@@ -314,7 +492,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     href={href} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 underline decoration-blue-300 hover:decoration-blue-600 transition-colors"
+                    className="text-blue-600 hover:text-blue-800 underline decoration-blue-300 hover:decoration-blue-600 transition-colors font-medium"
                   >
                     {children}
                   </a>
@@ -354,8 +532,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
             {/* Image du milieu (si content_image_url existe et n'est pas dans le Markdown) */}
             {showSeparateContentImage && post.content_image_url && (
-              <figure className="my-10">
-                <div className="relative w-full h-64 md:h-96 rounded-xl overflow-hidden shadow-lg">
+              <figure className="my-16 md:my-20">
+                {/* Séparateur visuel avant l'image */}
+                <div className="flex items-center justify-center mb-8">
+                  <div className="h-px bg-gray-200 flex-1"></div>
+                  <span className="px-4 text-gray-400 text-sm">📷</span>
+                  <div className="h-px bg-gray-200 flex-1"></div>
+                </div>
+                
+                <div className="relative w-full h-72 md:h-[450px] rounded-2xl overflow-hidden shadow-xl">
                   <Image
                     src={post.content_image_url}
                     alt="Illustration de l'article"
@@ -364,9 +549,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     sizes="(max-width: 768px) 100vw, 800px"
                   />
                 </div>
-                <figcaption className="text-center text-sm text-gray-500 mt-3 italic">
+                <figcaption className="text-center text-sm text-gray-500 mt-4 italic">
                   📷 Image via Unsplash
                 </figcaption>
+                
+                {/* Séparateur visuel après l'image */}
+                <div className="flex items-center justify-center mt-8">
+                  <div className="h-px bg-gray-200 flex-1"></div>
+                  <span className="px-4 text-gray-400 text-sm">✨</span>
+                  <div className="h-px bg-gray-200 flex-1"></div>
+                </div>
               </figure>
             )}
 
