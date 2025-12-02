@@ -27,9 +27,15 @@ export default function HeroSection() {
             Je développe des Sites Internets, Chatbots IA, App Mobiles qui résolvent des vrais Problèmes Business
           </p>
           
-          <a href="#portefeuille" className="inline-block px-7 py-3.5 border-2 border-black rounded-2xl text-base font-semibold hover:bg-black hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" style={{animation: 'fadeInUp 1s ease-out 0.6s both'}}>
-            Voir mes œuvres
-          </a>
+          <div className="flex flex-wrap gap-4" style={{animation: 'fadeInUp 1s ease-out 0.6s both'}}>
+            <a href="#portefeuille" className="inline-block px-7 py-3.5 border-2 border-black rounded-2xl text-base font-semibold hover:bg-black hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              Voir mes œuvres
+            </a>
+            <a href="/blog" className="inline-flex items-center gap-2 px-7 py-3.5 bg-blue-600 text-white border-2 border-black rounded-2xl text-base font-semibold hover:bg-blue-700 hover:scale-105 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <span>🧠</span>
+              <span>Mes pensées tech</span>
+            </a>
+          </div>
         </div>
 
         {/* Right side - Image */}

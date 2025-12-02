@@ -32,63 +32,85 @@ export default function FloatingActionBar({
   const [commentsCount, setCommentsCount] = useState(initialComments)
   const [sharesCount, setSharesCount] = useState(initialShares)
   const [leftPosition, setLeftPosition] = useState(0)
+  const [isVisible, setIsVisible] = useState(true)
 
   // Calculer la position à gauche de l'article (max-w-4xl = 896px)
+  // Et masquer quand on approche du footer
   useEffect(() => {
     const calculatePosition = () => {
       const articleWidth = 896 // max-w-4xl en px
-      const barWidth = 56 // Largeur de la barre (~p-3 + icônes)
-      const gap = 16 // Espace entre la barre et l'article
+      const barWidth = 36 // Largeur fine (+10%)
+      const gap = 8 // Espace entre la barre et l'article
       const windowWidth = window.innerWidth
       
       // Position = (largeur fenêtre - largeur article) / 2 - largeur barre - gap
       const articleLeft = (windowWidth - articleWidth) / 2
-      const newLeft = Math.max(12, articleLeft - barWidth - gap)
+      const newLeft = Math.max(4, articleLeft - barWidth - gap)
       
       setLeftPosition(newLeft)
     }
 
+    const handleScroll = () => {
+      // Trouver le footer
+      const footer = document.querySelector('footer')
+      if (footer) {
+        const footerRect = footer.getBoundingClientRect()
+        const windowHeight = window.innerHeight
+        // Masquer la barre quand le footer est visible (à moins de 200px du bas de l'écran)
+        const shouldHide = footerRect.top < windowHeight - 100
+        setIsVisible(!shouldHide)
+      }
+    }
+
     calculatePosition()
+    handleScroll()
+    
     window.addEventListener('resize', calculatePosition)
-    return () => window.removeEventListener('resize', calculatePosition)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    
+    return () => {
+      window.removeEventListener('resize', calculatePosition)
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   return (
     <>
-      {/* Barre flottante à gauche de l'article - style MSN */}
+      {/* Barre flottante à gauche de l'article - fine et allongée verticalement */}
       <div 
-        className="
+        className={`
           fixed top-1/2 -translate-y-1/2
-          hidden xl:flex flex-col items-center gap-2
-          py-3 px-2
+          hidden xl:flex flex-col items-center gap-5
+          py-6 px-1
           bg-white/95 dark:bg-gray-900/95
           backdrop-blur-sm
-          rounded-xl
-          shadow-lg
+          rounded-lg
+          shadow-md
           border border-gray-100 dark:border-gray-800
           z-30
           transition-all duration-300
-        "
-        style={{ left: `${leftPosition}px` }}
+          ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'}
+        `}
+        style={{ left: `${leftPosition}px`, minWidth: '36px', maxWidth: '40px' }}
       >
         {/* Like / Dislike */}
         <LikeDislikeButtons 
           postId={postId}
           initialLikes={initialLikes}
           initialDislikes={initialDislikes}
-          showDislikeCount={true}
-          size="sm"
+          showDislikeCount={false}
+          size="xs"
           orientation="vertical"
         />
 
         {/* Séparateur */}
-        <div className="w-8 h-px bg-gray-200 dark:bg-gray-700 my-1" />
+        <div className="w-4 h-px bg-gray-200 dark:bg-gray-700" />
 
         {/* Commentaires */}
         <button
           onClick={() => setIsCommentPanelOpen(true)}
           className="
-            p-2 rounded-full
+            p-1 rounded-full
             flex flex-col items-center gap-0.5
             text-gray-500 dark:text-gray-400 
             hover:bg-gray-100 dark:hover:bg-gray-800 
@@ -100,11 +122,11 @@ export default function FloatingActionBar({
           title="Voir les commentaires"
         >
           <MessageCircle 
-            size={22} 
+            size={16} 
             className="transition-transform group-hover:scale-110"
           />
           {commentsCount > 0 && (
-            <span className="text-xs font-medium">
+            <span className="text-[10px] font-medium leading-tight">
               {commentsCount >= 1000 ? `${(commentsCount / 1000).toFixed(1)}k` : commentsCount}
             </span>
           )}
@@ -114,7 +136,7 @@ export default function FloatingActionBar({
         <button
           onClick={() => setIsShareModalOpen(true)}
           className="
-            p-2 rounded-full
+            p-1 rounded-full
             flex flex-col items-center gap-0.5
             text-gray-500 dark:text-gray-400 
             hover:bg-gray-100 dark:hover:bg-gray-800 
@@ -126,7 +148,7 @@ export default function FloatingActionBar({
           title="Partager cet article"
         >
           <Share2 
-            size={22}
+            size={16}
             className="transition-transform group-hover:scale-110"
           />
         </button>
@@ -134,38 +156,41 @@ export default function FloatingActionBar({
 
       {/* Barre pour écrans moyens (lg mais pas xl) - positionnée plus près */}
       <div 
-        className="
-          fixed left-3 top-1/2 -translate-y-1/2
-          hidden lg:flex xl:hidden flex-col items-center gap-2
-          py-3 px-2
+        className={`
+          fixed left-1 top-1/2 -translate-y-1/2
+          hidden lg:flex xl:hidden flex-col items-center gap-4
+          py-5 px-0.5
           bg-white/95 dark:bg-gray-900/95
           backdrop-blur-sm
-          rounded-xl
-          shadow-lg
+          rounded-lg
+          shadow-md
           border border-gray-100 dark:border-gray-800
           z-30
-        "
+          transition-all duration-300
+          ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'}
+        `}
+        style={{ minWidth: '26px', maxWidth: '30px' }}
       >
         <LikeDislikeButtons 
           postId={postId}
           initialLikes={initialLikes}
           initialDislikes={initialDislikes}
           showDislikeCount={false}
-          size="sm"
+          size="xs"
           orientation="vertical"
         />
-        <div className="w-8 h-px bg-gray-200 dark:bg-gray-700 my-1" />
+        <div className="w-4 h-px bg-gray-200 dark:bg-gray-700" />
         <button
           onClick={() => setIsCommentPanelOpen(true)}
-          className="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-blue-600 transition-all"
+          className="p-1 rounded-full text-gray-500 hover:bg-gray-100 hover:text-blue-600 transition-all"
         >
-          <MessageCircle size={20} />
+          <MessageCircle size={14} />
         </button>
         <button
           onClick={() => setIsShareModalOpen(true)}
-          className="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-purple-600 transition-all"
+          className="p-1 rounded-full text-gray-500 hover:bg-gray-100 hover:text-purple-600 transition-all"
         >
-          <Share2 size={20} />
+          <Share2 size={14} />
         </button>
       </div>
 

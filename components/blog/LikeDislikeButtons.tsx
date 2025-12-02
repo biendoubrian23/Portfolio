@@ -8,7 +8,7 @@ interface LikeDislikeButtonsProps {
   initialLikes: number
   initialDislikes: number
   showDislikeCount?: boolean // Par défaut false
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
   orientation?: 'horizontal' | 'vertical'
 }
 
@@ -87,15 +87,16 @@ export default function LikeDislikeButtons({
 
   // Tailles des icônes et boutons
   const sizeClasses = {
-    sm: { icon: 16, button: 'p-1.5', text: 'text-xs' },
-    md: { icon: 20, button: 'p-2', text: 'text-sm' },
-    lg: { icon: 24, button: 'p-3', text: 'text-base' }
+    xs: { icon: 16, button: 'p-1', text: 'text-[9px]' },
+    sm: { icon: 18, button: 'p-1.5', text: 'text-[10px]' },
+    md: { icon: 20, button: 'p-2', text: 'text-xs' },
+    lg: { icon: 24, button: 'p-3', text: 'text-sm' }
   }
 
   const currentSize = sizeClasses[size]
   const containerClass = orientation === 'vertical' 
-    ? 'flex flex-col gap-2' 
-    : 'flex flex-row gap-3'
+    ? 'flex flex-col gap-4' 
+    : 'flex flex-row gap-2'
 
   return (
     <div className={containerClass}>
@@ -105,7 +106,7 @@ export default function LikeDislikeButtons({
         disabled={isLoading}
         className={`
           ${currentSize.button}
-          flex items-center gap-1.5 rounded-full
+          flex ${orientation === 'vertical' ? 'flex-col' : 'flex-row'} items-center gap-0.5 rounded-full
           transition-all duration-200 ease-out
           ${userInteraction === 'like' 
             ? 'bg-green-500 text-white shadow-lg shadow-green-500/30 scale-110' 
@@ -123,7 +124,7 @@ export default function LikeDislikeButtons({
           fill={userInteraction === 'like' ? 'currentColor' : 'none'}
         />
         {likes > 0 && (
-          <span className={`${currentSize.text} font-medium min-w-[1.5rem]`}>
+          <span className={`${currentSize.text} font-medium leading-none`}>
             {likes >= 1000 ? `${(likes / 1000).toFixed(1)}k` : likes}
           </span>
         )}
@@ -135,7 +136,7 @@ export default function LikeDislikeButtons({
         disabled={isLoading}
         className={`
           ${currentSize.button}
-          flex items-center gap-1.5 rounded-full
+          flex ${orientation === 'vertical' ? 'flex-col' : 'flex-row'} items-center gap-0.5 rounded-full
           transition-all duration-200 ease-out
           ${userInteraction === 'dislike' 
             ? 'bg-red-500 text-white shadow-lg shadow-red-500/30 scale-110' 
@@ -153,7 +154,7 @@ export default function LikeDislikeButtons({
           fill={userInteraction === 'dislike' ? 'currentColor' : 'none'}
         />
         {showDislikeCount && dislikes > 0 && (
-          <span className={`${currentSize.text} font-medium min-w-[1.5rem]`}>
+          <span className={`${currentSize.text} font-medium leading-none`}>
             {dislikes >= 1000 ? `${(dislikes / 1000).toFixed(1)}k` : dislikes}
           </span>
         )}

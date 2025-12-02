@@ -662,19 +662,21 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </svg>
               Sources & Références
             </h2>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {post.sources.map((source, index) => (
-                <li key={index}>
+                <li key={index} className="overflow-hidden">
                   <a
-                    href={source.url}
+                    href={source.url || source.title}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline flex items-center gap-2"
+                    className="text-blue-600 hover:underline flex items-start gap-2 break-all"
                   >
-                    <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
-                    {source.title}
+                    <span className="break-words">
+                      {source.url ? source.title : source.title.substring(0, 60) + (source.title.length > 60 ? '...' : '')}
+                    </span>
                   </a>
                 </li>
               ))}
