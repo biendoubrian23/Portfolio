@@ -10,6 +10,7 @@ import { fr } from 'date-fns/locale'
 import ShareButtons from '@/components/ShareButtons'
 import ViewTracker from '@/components/ViewTracker'
 import { FloatingActionBar } from '@/components/blog'
+import CodeBlock, { InlineCode } from '@/components/CodeBlock'
 
 /**
  * Nettoie et formate le contenu Markdown pour un affichage professionnel
@@ -512,22 +513,26 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     {children}
                   </a>
                 ),
-                // Blocs de code
-                code: ({ children, className }) => {
-                  const isBlock = className?.includes('language-');
+                // Blocs de code avec coloration syntaxique
+                code: ({ children, className, ...props }) => {
+                  // Détecter si c'est un bloc de code (avec ```) ou inline
+                  const match = /language-(\w+)/.exec(className || '')
+                  const isBlock = match || (typeof children === 'string' && children.includes('\n'))
+                  
                   if (isBlock) {
+                    const language = match ? match[1] : undefined
                     return (
-                      <code className="block bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto text-sm">
-                        {children}
-                      </code>
-                    );
+                      <CodeBlock language={language}>
+                        {String(children).replace(/\n$/, '')}
+                      </CodeBlock>
+                    )
                   }
-                  return (
-                    <code className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm font-mono">
-                      {children}
-                    </code>
-                  );
+                  
+                  // Code inline
+                  return <InlineCode>{children}</InlineCode>
                 },
+                // Wrapper pre pour les blocs de code (juste passer les enfants)
+                pre: ({ children }) => <>{children}</>,
                 // Citations blockquote
                 blockquote: ({ children }) => (
                   <blockquote className="my-8 pl-6 border-l-4 border-blue-500 bg-gradient-to-r from-blue-50 to-transparent py-4 pr-4 rounded-r-lg">
@@ -645,6 +650,22 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                       <div className="text-gray-700 italic text-lg">{children}</div>
                     </blockquote>
                   ),
+                  // Blocs de code avec coloration syntaxique
+                  code: ({ children, className }) => {
+                    const match = /language-(\w+)/.exec(className || '')
+                    const isBlock = match || (typeof children === 'string' && children.includes('\n'))
+                    
+                    if (isBlock) {
+                      const language = match ? match[1] : undefined
+                      return (
+                        <CodeBlock language={language}>
+                          {String(children).replace(/\n$/, '')}
+                        </CodeBlock>
+                      )
+                    }
+                    return <InlineCode>{children}</InlineCode>
+                  },
+                  pre: ({ children }) => <>{children}</>,
                 }}
               >
                 {contentPart2}
