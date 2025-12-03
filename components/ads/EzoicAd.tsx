@@ -3,10 +3,10 @@
 import { useEffect } from 'react'
 
 // Ezoic Ad Components for brianbiendou.com
+// Placeholders IDs from Ezoic Dashboard
 
 /**
- * Composant placeholder pour Ezoic
- * Les IDs correspondent à ceux configurés dans le dashboard Ezoic
+ * Composant placeholder générique pour Ezoic
  */
 interface EzoicPlaceholderProps {
   id: number
@@ -23,8 +23,32 @@ export function EzoicPlaceholder({ id, className = '' }: EzoicPlaceholderProps) 
 }
 
 /**
+ * Top of Page Ad - En haut de la page blog
+ * ID: 101
+ */
+export function TopOfPageAd() {
+  return (
+    <div className="w-full flex justify-center my-4">
+      <EzoicPlaceholder id={101} />
+    </div>
+  )
+}
+
+/**
+ * Bottom of Page Ad - En bas de la page
+ * ID: 103
+ */
+export function BottomOfPageAd() {
+  return (
+    <div className="w-full flex justify-center my-8">
+      <EzoicPlaceholder id={103} />
+    </div>
+  )
+}
+
+/**
  * Sidebar Ad - Pour les côtés de l'article (Desktop uniquement)
- * IDs Ezoic: 107 (sidebar_floating_1), 108 (sidebar_floating_2)
+ * IDs: 107 (sidebar_floating_1), 108 (sidebar_floating_2)
  */
 export function SidebarAd({ position }: { position: 'left' | 'right' }) {
   const id = position === 'left' ? 107 : 108
@@ -38,36 +62,106 @@ export function SidebarAd({ position }: { position: 'left' | 'right' }) {
 
 /**
  * Sidebar Bottom Ad - En bas de la sidebar
- * ID Ezoic: 106 (sidebar_bottom)
+ * ID: 106
  */
 export function SidebarBottomAd() {
   return <EzoicPlaceholder id={106} className="mt-4" />
 }
 
 /**
- * In-Content Ads - Dans le contenu de l'article
- * IDs Ezoic: 109-115 (under_first_paragraph, under_second_paragraph, mid_content, etc.)
+ * Sidebar Standard Ad
+ * ID: 104
  */
-export function InContentAd({ position }: { position: 'first' | 'second' | 'mid' | 'long' | 'longer' | 'longest' }) {
-  const positionToId: Record<string, number> = {
-    first: 109,   // under_first_paragraph
-    second: 110,  // under_second_paragraph
-    mid: 111,     // mid_content
-    long: 112,    // long_content
-    longer: 113,  // longer_content
-    longest: 114, // longest_content
-  }
-  
+export function SidebarStandardAd() {
+  return <EzoicPlaceholder id={104} className="my-4" />
+}
+
+/**
+ * Under First Paragraph Ad
+ * ID: 109
+ */
+export function UnderFirstParagraphAd() {
   return (
-    <div className="my-8 flex justify-center">
-      <EzoicPlaceholder id={positionToId[position]} />
+    <div className="my-8 flex justify-center not-prose">
+      <EzoicPlaceholder id={109} />
     </div>
   )
 }
 
 /**
- * After Article Ad
- * ID Ezoic: 115 (incontent_5)
+ * Under Second Paragraph Ad
+ * ID: 110
+ */
+export function UnderSecondParagraphAd() {
+  return (
+    <div className="my-8 flex justify-center not-prose">
+      <EzoicPlaceholder id={110} />
+    </div>
+  )
+}
+
+/**
+ * Mid Content Ad - Au milieu du contenu
+ * ID: 111
+ */
+export function MidContentAd() {
+  return (
+    <div className="my-8 flex justify-center not-prose">
+      <EzoicPlaceholder id={111} />
+    </div>
+  )
+}
+
+/**
+ * Long Content Ad - Pour les longs articles
+ * ID: 112
+ */
+export function LongContentAd() {
+  return (
+    <div className="my-8 flex justify-center not-prose">
+      <EzoicPlaceholder id={112} />
+    </div>
+  )
+}
+
+/**
+ * Longer Content Ad
+ * ID: 113
+ */
+export function LongerContentAd() {
+  return (
+    <div className="my-8 flex justify-center not-prose">
+      <EzoicPlaceholder id={113} />
+    </div>
+  )
+}
+
+/**
+ * Longest Content Ad
+ * ID: 114
+ */
+export function LongestContentAd() {
+  return (
+    <div className="my-8 flex justify-center not-prose">
+      <EzoicPlaceholder id={114} />
+    </div>
+  )
+}
+
+/**
+ * In-Content 5 Ad
+ * ID: 115
+ */
+export function InContent5Ad() {
+  return (
+    <div className="my-8 flex justify-center not-prose">
+      <EzoicPlaceholder id={115} />
+    </div>
+  )
+}
+
+/**
+ * After Article Ad - Après l'article
  */
 export function AfterArticleAd() {
   return (
@@ -78,12 +172,30 @@ export function AfterArticleAd() {
 }
 
 /**
- * Hook pour initialiser Ezoic sur la page
- * À appeler dans le layout du blog
+ * In-Content Ads - Wrapper générique
+ */
+export function InContentAd({ position }: { position: 'first' | 'second' | 'mid' | 'long' | 'longer' | 'longest' }) {
+  const positionToId: Record<string, number> = {
+    first: 109,
+    second: 110,
+    mid: 111,
+    long: 112,
+    longer: 113,
+    longest: 114,
+  }
+  
+  return (
+    <div className="my-8 flex justify-center not-prose">
+      <EzoicPlaceholder id={positionToId[position]} />
+    </div>
+  )
+}
+
+/**
+ * Hook pour initialiser Ezoic
  */
 export function useEzoicAds() {
   useEffect(() => {
-    // Attendre que ezstandalone soit disponible
     if (typeof window !== 'undefined' && (window as any).ezstandalone) {
       const ez = (window as any).ezstandalone
       ez.cmd = ez.cmd || []
@@ -95,7 +207,7 @@ export function useEzoicAds() {
 }
 
 /**
- * Hook pour recharger les pubs après navigation (Next.js App Router)
+ * Hook pour recharger les pubs après navigation
  */
 export function useEzoicRefresh() {
   useEffect(() => {

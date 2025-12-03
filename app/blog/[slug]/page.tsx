@@ -11,7 +11,15 @@ import ShareButtons from '@/components/ShareButtons'
 import ViewTracker from '@/components/ViewTracker'
 import { FloatingActionBar } from '@/components/blog'
 import CodeBlock, { InlineCode } from '@/components/CodeBlock'
-import { SidebarAd, AfterArticleAd } from '@/components/ads'
+import { 
+  SidebarAd, 
+  SidebarBottomAd,
+  TopOfPageAd,
+  BottomOfPageAd,
+  UnderFirstParagraphAd,
+  MidContentAd,
+  AfterArticleAd 
+} from '@/components/ads'
 
 /**
  * Nettoie et formate le contenu Markdown pour un affichage professionnel
@@ -315,13 +323,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </ol>
       </nav>
 
+      {/* Ezoic - Top of Page Ad */}
+      <div className="max-w-4xl mx-auto px-6 mb-4">
+        <TopOfPageAd />
+      </div>
+
       {/* Container principal avec sidebars publicitaires */}
       <div className="flex justify-center gap-4 px-4">
         {/* Sidebar gauche - Publicités (visible uniquement sur grands écrans) */}
         <aside className="hidden 2xl:block w-[180px] shrink-0">
           <div className="sticky top-24 space-y-6">
             <SidebarAd position="left" />
-            <SidebarAd position="left" />
+            <SidebarBottomAd />
           </div>
         </aside>
 
@@ -769,13 +782,18 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <aside className="hidden 2xl:block w-[180px] shrink-0">
           <div className="sticky top-24 space-y-6">
             <SidebarAd position="right" />
-            <SidebarAd position="right" />
+            <SidebarBottomAd />
           </div>
         </aside>
       </div>
 
+      {/* Ezoic - Bottom of Page Ad */}
+      <div className="max-w-4xl mx-auto px-6 mt-8 mb-4">
+        <BottomOfPageAd />
+      </div>
+
       {/* Back to blog */}
-      <div className="max-w-4xl mx-auto px-6 mt-12 mb-24 lg:mb-0 text-center">
+      <div className="max-w-4xl mx-auto px-6 mt-8 mb-24 lg:mb-0 text-center">
         <Link
           href="/blog"
           className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold"
