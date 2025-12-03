@@ -11,15 +11,7 @@ import ShareButtons from '@/components/ShareButtons'
 import ViewTracker from '@/components/ViewTracker'
 import { FloatingActionBar } from '@/components/blog'
 import CodeBlock, { InlineCode } from '@/components/CodeBlock'
-import { 
-  SidebarAd, 
-  SidebarBottomAd,
-  TopOfPageAd,
-  BottomOfPageAd,
-  UnderFirstParagraphAd,
-  MidContentAd,
-  AfterArticleAd 
-} from '@/components/ads'
+import { AfterArticleBanner } from '@/components/ads'
 
 /**
  * Nettoie et formate le contenu Markdown pour un affichage professionnel
@@ -323,21 +315,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </ol>
       </nav>
 
-      {/* Ezoic - Top of Page Ad */}
-      <div className="max-w-4xl mx-auto px-6 mb-4">
-        <TopOfPageAd />
-      </div>
-
-      {/* Container principal avec sidebars publicitaires */}
-      <div className="flex justify-center gap-4 px-4">
-        {/* Sidebar gauche - Publicités (visible uniquement sur grands écrans) */}
-        <aside className="hidden 2xl:block w-[180px] shrink-0">
-          <div className="sticky top-24 space-y-6">
-            <SidebarAd position="left" />
-            <SidebarBottomAd />
-          </div>
-        </aside>
-
+      {/* Container principal */}
+      <div className="flex justify-center px-4">
         {/* Contenu principal de l'article */}
         <div className="flex-1 max-w-4xl">
           <article className="px-6">
@@ -773,23 +752,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </section>
         )}
 
-        {/* Publicité après l'article */}
-        <AfterArticleAd />
+        {/* Adsterra Native Banner - Après l'article */}
+        <AfterArticleBanner />
+
       </article>
         </div>
-
-        {/* Sidebar droite - Publicités (visible uniquement sur grands écrans) */}
-        <aside className="hidden 2xl:block w-[180px] shrink-0">
-          <div className="sticky top-24 space-y-6">
-            <SidebarAd position="right" />
-            <SidebarBottomAd />
-          </div>
-        </aside>
-      </div>
-
-      {/* Ezoic - Bottom of Page Ad */}
-      <div className="max-w-4xl mx-auto px-6 mt-8 mb-4">
-        <BottomOfPageAd />
       </div>
 
       {/* Back to blog */}
