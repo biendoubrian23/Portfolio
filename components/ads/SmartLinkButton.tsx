@@ -16,14 +16,14 @@ export function SmartLinkButton() {
     const interval = setInterval(() => {
       setIsBouncing(true)
       // Arrêter l'animation après 1 seconde
-      setTimeout(() => setIsBouncing(false), 1000)
-    }, 6000)
+      setTimeout(() => setIsBouncing(false), 500)
+    }, 10000)
 
     // Premier sautillement après 2 secondes
     const initialTimeout = setTimeout(() => {
       setIsBouncing(true)
-      setTimeout(() => setIsBouncing(false), 1000)
-    }, 2000)
+      setTimeout(() => setIsBouncing(false), 500)
+    }, 4000)
 
     return () => {
       clearInterval(interval)
