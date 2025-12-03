@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react'
 
+// Ezoic Ad Components for brianbiendou.com
+
 /**
  * Composant placeholder pour Ezoic
  * Les IDs correspondent à ceux configurés dans le dashboard Ezoic
