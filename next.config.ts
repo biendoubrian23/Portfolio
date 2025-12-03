@@ -23,6 +23,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // Redirection ads.txt pour Ezoic
+  async redirects() {
+    return [
+      {
+        source: '/ads.txt',
+        destination: 'https://srv.adstxtmanager.com/19390/brianbiendou.com',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

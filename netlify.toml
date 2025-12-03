@@ -1,3 +1,6 @@
+# Ce fichier n'est pas utilisé - le portfolio est sur Vercel
+# La redirection ads.txt est dans next.config.ts
+
 [build]
   command = "npm run build"
   publish = ".next"
