@@ -11,7 +11,7 @@ import ShareButtons from '@/components/ShareButtons'
 import ViewTracker from '@/components/ViewTracker'
 import { FloatingActionBar } from '@/components/blog'
 import CodeBlock, { InlineCode } from '@/components/CodeBlock'
-import { SidebarAd, InArticleAd, AfterArticleAd } from '@/components/ads'
+import { SidebarAd, AfterArticleAd } from '@/components/ads'
 
 /**
  * Nettoie et formate le contenu Markdown pour un affichage professionnel
