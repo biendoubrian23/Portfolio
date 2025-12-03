@@ -8,12 +8,30 @@ export default function BlogLayout({
 }) {
   return (
     <>
-      {/* Adsterra Popunder - Uniquement sur les pages blog */}
-      <Script
-        id="adsterra-popunder"
-        src="//pl28182591.effectivegatecpm.com/78/31/7a/78317a9a365c11f12a3580413080a13c.js"
-        strategy="afterInteractive"
-      />
+      {/* Contrôle du cooldown pour limiter les popunders agressifs */}
+      <Script id="popunder-cooldown" strategy="afterInteractive">
+        {`
+          (function() {
+            const COOLDOWN_MS = 30000; // 30 secondes
+            const STORAGE_KEY = 'adsterra_popunder_last';
+            
+            // Vérifier si on peut charger le popunder
+            const lastPopunder = localStorage.getItem(STORAGE_KEY);
+            const now = Date.now();
+            
+            if (!lastPopunder || (now - parseInt(lastPopunder)) > COOLDOWN_MS) {
+              // Charger le script popunder
+              const script = document.createElement('script');
+              script.src = '//pl28182591.effectivegatecpm.com/78/31/7a/78317a9a365c11f12a3580413080a13c.js';
+              script.async = true;
+              document.body.appendChild(script);
+              
+              // Enregistrer le timestamp
+              localStorage.setItem(STORAGE_KEY, now.toString());
+            }
+          })();
+        `}
+      </Script>
       
       {/* Adsterra Social Bar - Barre flottante sur les pages blog */}
       <Script
