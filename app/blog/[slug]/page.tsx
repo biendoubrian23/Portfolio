@@ -11,7 +11,6 @@ import ShareButtons from '@/components/ShareButtons'
 import ViewTracker from '@/components/ViewTracker'
 import { FloatingActionBar } from '@/components/blog'
 import CodeBlock, { InlineCode } from '@/components/CodeBlock'
-import { AfterArticleBanner, AdsterraSidebarBanner } from '@/components/ads'
 
 /**
  * Nettoie et formate le contenu Markdown pour un affichage professionnel
@@ -315,15 +314,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </ol>
       </nav>
 
-      {/* Container principal avec sidebars publicitaires */}
-      <div className="flex justify-center gap-4 px-4">
-        {/* Sidebar gauche - Publicité 160x300 (visible uniquement sur très grands écrans) */}
-        <aside className="hidden 2xl:block w-[180px] shrink-0">
-          <div className="sticky top-24">
-            <AdsterraSidebarBanner />
-          </div>
-        </aside>
-
+      {/* Container principal */}
+      <div className="flex justify-center px-4">
         {/* Contenu principal de l'article */}
         <div className="flex-1 max-w-4xl">
           <article className="px-6">
@@ -759,18 +751,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </section>
         )}
 
-        {/* Adsterra Native Banner - Après l'article */}
-        <AfterArticleBanner />
-
       </article>
         </div>
-
-        {/* Sidebar droite - Publicité 160x300 (visible uniquement sur très grands écrans) */}
-        <aside className="hidden 2xl:block w-[180px] shrink-0">
-          <div className="sticky top-24">
-            <AdsterraSidebarBanner />
-          </div>
-        </aside>
       </div>
 
       {/* Back to blog */}
