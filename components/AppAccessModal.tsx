@@ -8,9 +8,10 @@ interface AppAccessModalProps {
   appTitle: string;
   appImage: string;
   appUrl: string;
+  appDescription: string;
 }
 
-export default function AppAccessModal({ isOpen, onClose, appTitle, appImage, appUrl }: AppAccessModalProps) {
+export default function AppAccessModal({ isOpen, onClose, appTitle, appImage, appUrl, appDescription }: AppAccessModalProps) {
   if (!isOpen) return null;
 
   return (
@@ -46,7 +47,7 @@ export default function AppAccessModal({ isOpen, onClose, appTitle, appImage, ap
           </h2>
 
           <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-            Créez des miniatures professionnelles en toute simplicité ! Inspirez-vous de designs existants et personnalisez-les avec vos propres éléments pour obtenir des résultats uniques qui captent l&apos;attention.
+            {appDescription}
           </p>
 
           {/* CTA Button */}

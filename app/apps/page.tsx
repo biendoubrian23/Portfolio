@@ -11,8 +11,21 @@ const apps = [
     description: 'Un site dédié à la création et personnalisation de miniatures uniques.',
     url: 'https://www.faireuneminiature.fr/',
     image: '/makeminia.jpeg',
+    previewImage: '/iframe1.jpeg',
     tags: ['Web', 'Miniatures', 'Design'],
+    technologies: ['Next.js', 'React Konva', 'Framer Motion', 'Zustand'],
     color: 'from-purple-500 to-pink-500'
+  },
+  {
+    id: 2,
+    title: 'InvoiceDesign',
+    description: 'Créez des factures professionnelles en quelques clics grâce à une interface 100% modulaire. Glissez-déposez vos blocs, personnalisez chaque élément et exportez en PDF haute qualité.',
+    url: 'https://invoicedesign-pgz9.vercel.app/',
+    image: '/iframe3.jpeg',
+    previewImage: '/iframe3.jpeg',
+    tags: ['Facturation', 'PDF', 'Business'],
+    technologies: ['Next.js', 'dnd-kit', 'Zod', 'jsPDF'],
+    color: 'from-blue-500 to-indigo-500'
   },
 ];
 
@@ -48,13 +61,13 @@ export default function AppsPage() {
           {apps.map((app) => (
             <article
               key={app.id}
-              className="group bg-white rounded-3xl border-2 border-black overflow-hidden shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-all duration-300"
+              className="group bg-white rounded-3xl border-2 border-black overflow-hidden shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 transition-all duration-300 flex flex-col"
             >
               {/* Preview Card */}
               <div className="relative h-64 bg-gray-100 overflow-hidden border-b-2 border-black">
                 <div className={`absolute inset-0 bg-gradient-to-br ${app.color} opacity-10`} />
                 <img
-                  src="/iframe1.jpeg"
+                  src={app.previewImage}
                   alt={`Preview of ${app.title}`}
                   className="w-full h-full object-cover"
                 />
@@ -62,7 +75,7 @@ export default function AppsPage() {
               </div>
 
               {/* Content */}
-              <div className="p-6">
+              <div className="p-6 flex flex-col flex-grow">
                 <h2 className="text-2xl font-bold mb-3 text-gray-900 group-hover:text-purple-600 transition-colors">
                   {app.title}
                 </h2>
@@ -71,7 +84,7 @@ export default function AppsPage() {
                 </p>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-2 mb-2">
                   {app.tags.map((tag) => (
                     <span
                       key={tag}
@@ -82,10 +95,22 @@ export default function AppsPage() {
                   ))}
                 </div>
 
+                {/* Technologies */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {app.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1 bg-amber-50 text-amber-700 text-xs font-medium rounded-full border border-amber-400"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
                 {/* CTA */}
                 <button
                   onClick={() => setSelectedApp(app)}
-                  className="inline-flex items-center gap-2 w-full justify-center px-6 py-3 bg-purple-500 text-white border-2 border-black rounded-xl font-semibold hover:bg-purple-600 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+                  className="inline-flex items-center gap-2 w-full justify-center px-6 py-3 bg-purple-500 text-white border-2 border-black rounded-xl font-semibold hover:bg-purple-600 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] mt-auto"
                 >
                   <span>Voir l&apos;application</span>
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,6 +144,7 @@ export default function AppsPage() {
           appTitle={selectedApp.title}
           appImage={selectedApp.image}
           appUrl={selectedApp.url}
+          appDescription={selectedApp.description}
         />
       )}
     </main>
