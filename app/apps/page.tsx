@@ -1,18 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { Metadata } from 'next';
 import Link from 'next/link';
 import AppAccessModal from '@/components/AppAccessModal';
 
 const apps = [
   {
     id: 1,
-    title: 'Minia Maker',
-    description: 'Une application interactive pour créer et personnaliser des designs de miniatures.',
-    url: 'https://minia-maker-gilt.vercel.app/',
+    title: 'Faire une Miniature',
+    description: 'Un site dédié à la création et personnalisation de miniatures uniques.',
+    url: 'https://www.faireuneminiature.fr/',
     image: '/makeminia.jpeg',
-    tags: ['Next.js', 'React', 'Design'],
+    tags: ['Web', 'Miniatures', 'Design'],
     color: 'from-purple-500 to-pink-500'
   },
 ];
@@ -23,7 +22,7 @@ export default function AppsPage() {
     <main className="min-h-screen bg-gray-50 pt-24 pb-16">
       {/* Hero Section */}
       <section className="relative bg-white py-16 mb-12 border-b-2 border-black overflow-hidden -mt-24 pt-32">
-        <div 
+        <div
           className="absolute inset-0 opacity-[0.08]"
           style={{
             backgroundImage: `
@@ -54,11 +53,10 @@ export default function AppsPage() {
               {/* Preview Card */}
               <div className="relative h-64 bg-gray-100 overflow-hidden border-b-2 border-black">
                 <div className={`absolute inset-0 bg-gradient-to-br ${app.color} opacity-10`} />
-                <iframe
-                  src={app.url}
-                  className="w-full h-full pointer-events-none scale-50 origin-top-left"
-                  style={{ width: '200%', height: '200%' }}
-                  title={`Preview of ${app.title}`}
+                <img
+                  src="/iframe1.jpeg"
+                  alt={`Preview of ${app.title}`}
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
               </div>
@@ -120,6 +118,7 @@ export default function AppsPage() {
           onClose={() => setSelectedApp(null)}
           appTitle={selectedApp.title}
           appImage={selectedApp.image}
+          appUrl={selectedApp.url}
         />
       )}
     </main>
