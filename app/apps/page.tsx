@@ -20,7 +20,7 @@ const apps = [
     id: 2,
     title: 'InvoiceDesign',
     description: 'Créez des factures professionnelles en quelques clics grâce à une interface 100% modulaire. Glissez-déposez vos blocs, personnalisez chaque élément et exportez en PDF haute qualité.',
-    url: 'https://invoicedesign-pgz9.vercel.app/',
+    url: 'https://www.invoicedesign.fr/',
     image: '/iframe3.jpeg',
     previewImage: '/iframe3.jpeg',
     tags: ['Facturation', 'PDF', 'Business'],
