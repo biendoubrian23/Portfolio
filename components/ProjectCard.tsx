@@ -18,6 +18,7 @@ export default function ProjectCard({
 }) {
   const cardRef = useRef<HTMLElement>(null);
   const peekTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const preloaded = useRef(false);
   const [peeking, setPeeking] = useState(false);
 
   const handleMove = (e: React.MouseEvent<HTMLElement>) => {
@@ -34,7 +35,13 @@ export default function ProjectCard({
 
   const handleEnter = () => {
     cardRef.current?.style.setProperty('--tilt-lift', '-6px');
-    peekTimer.current = setTimeout(() => setPeeking(true), 180);
+    // La capture est mise en cache tout de suite : la loupe defile des son ouverture
+    if (!preloaded.current) {
+      preloaded.current = true;
+      const img = new window.Image();
+      img.src = project.preview;
+    }
+    peekTimer.current = setTimeout(() => setPeeking(true), 70);
   };
 
   const handleLeave = () => {

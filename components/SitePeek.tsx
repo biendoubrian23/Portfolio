@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { getPointer } from '@/lib/pointer';
 
-const WIDTH = 440;
-const HEIGHT = 310;
-const CHROME_HEIGHT = 30;
+// Panneau volontairement large : l'apercu doit se lire, pas se deviner.
+const WIDTH = 820;
+const HEIGHT = 580;
+const CHROME_HEIGHT = 38;
 const VIEW_HEIGHT = HEIGHT - CHROME_HEIGHT;
 
 type Props = {
@@ -40,8 +41,8 @@ export default function SitePeek({ src, url, active, accent = '#3B82F6' }: Props
 
     const place = (clientX: number, clientY: number) => {
       const pad = 20;
-      let x = clientX + 30;
-      if (x + WIDTH + pad > window.innerWidth) x = clientX - WIDTH - 30;
+      let x = clientX + 36;
+      if (x + WIDTH + pad > window.innerWidth) x = clientX - WIDTH - 36;
       x = Math.max(pad, Math.min(x, window.innerWidth - WIDTH - pad));
 
       const y = Math.max(
@@ -98,7 +99,7 @@ export default function SitePeek({ src, url, active, accent = '#3B82F6' }: Props
         style={{
           width: WIDTH,
           height: HEIGHT,
-          boxShadow: `10px 10px 0px 0px rgba(0,0,0,1), 0 24px 60px -12px ${accent}66`,
+          boxShadow: `12px 12px 0px 0px rgba(0,0,0,1), 0 30px 80px -14px ${accent}77`,
         }}
       >
         {/* Barre de navigateur factice */}
@@ -107,11 +108,11 @@ export default function SitePeek({ src, url, active, accent = '#3B82F6' }: Props
           style={{ height: CHROME_HEIGHT }}
         >
           <span className="flex gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57] border border-black/20" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e] border border-black/20" />
-            <span className="w-2.5 h-2.5 rounded-full bg-[#28c840] border border-black/20" />
+            <span className="w-3 h-3 rounded-full bg-[#ff5f57] border border-black/20" />
+            <span className="w-3 h-3 rounded-full bg-[#febc2e] border border-black/20" />
+            <span className="w-3 h-3 rounded-full bg-[#28c840] border border-black/20" />
           </span>
-          <span className="flex-1 truncate text-[10px] font-mono text-gray-500 bg-white rounded px-2 py-0.5 border border-gray-200">
+          <span className="flex-1 truncate text-xs font-mono text-gray-500 bg-white rounded px-2.5 py-1 border border-gray-200">
             {host}
           </span>
         </div>
@@ -124,12 +125,16 @@ export default function SitePeek({ src, url, active, accent = '#3B82F6' }: Props
           <img
             src={src}
             alt=""
+            // Une capture deja en cache est complete avant meme l'evenement de chargement
+            ref={(el) => {
+              if (el?.complete) setLoaded(true);
+            }}
             onLoad={() => setLoaded(true)}
             className={`block w-full h-auto ${loaded ? 'peek-scroller' : ''}`}
             style={
               {
                 '--peek-height': `${VIEW_HEIGHT}px`,
-                '--peek-duration': '22s',
+                '--peek-duration': '13s',
               } as React.CSSProperties
             }
           />

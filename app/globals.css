@@ -286,14 +286,33 @@ body {
    Loupe de prévisualisation — défilement automatique du site
    ═══════════════════════════════════════════════════════════ */
 
+/*
+ * Descente immediate : la capture part vite des la premiere image, puis
+ * freine longuement en approchant du bas, comme une course qui ralentit a
+ * l'arrivee. Courte pause en bas, puis remontee plus discrete.
+ * Les fonctions de temps sont portees par les etapes, pas par la regle.
+ */
 @keyframes peek-scroll {
-  0%, 6%    { transform: translate3d(0, 0, 0); }
-  94%, 100% { transform: translate3d(0, calc(-100% + var(--peek-height)), 0); }
+  0% {
+    transform: translate3d(0, 0, 0);
+    animation-timing-function: cubic-bezier(0.08, 0.82, 0.2, 1);
+  }
+  62% {
+    transform: translate3d(0, calc(-100% + var(--peek-height)), 0);
+    animation-timing-function: linear;
+  }
+  72% {
+    transform: translate3d(0, calc(-100% + var(--peek-height)), 0);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .peek-scroller {
   will-change: transform;
-  animation: peek-scroll var(--peek-duration, 20s) ease-in-out infinite alternate;
+  animation: peek-scroll var(--peek-duration, 13s) linear infinite;
 }
 
 @keyframes peek-in {
@@ -385,7 +404,7 @@ body {
    ═══════════════════════════════════════════════════════════ */
 
 .scroll-frame .scroll-inner {
-  animation: peek-scroll var(--peek-duration, 26s) ease-in-out infinite alternate;
+  animation: peek-scroll var(--peek-duration, 18s) linear infinite;
   animation-play-state: paused;
 }
 
