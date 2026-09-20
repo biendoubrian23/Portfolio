@@ -1,7 +1,7 @@
 # Captures de vérification
 
-Captures prises automatiquement dans Chrome (Puppeteer) sur le site lancé en
-local, après chaque implémentation. Elles servent de preuve visuelle des
+Captures prises automatiquement dans Chrome (Puppeteer) sur le **build de
+production**, après chaque implémentation. Elles servent de preuve visuelle des
 modifications et de garde-fou : le script relève aussi les erreurs console et
 les requêtes échouées (résultat dans `_rapport.txt`).
 
@@ -16,8 +16,8 @@ barres fixes neutralisées pour qu'elles ne se répètent pas.
 | `01-accueil-hero-3-boutons.webp` | Les trois boutons du hero : Me contacter, Mes réalisations, Mes apps |
 | `02-savoir-faire-carousel.webp` | Section 2 : le carousel infini des savoir-faire (icônes colorées, sans bloc de fond) |
 | `03-savoir-faire-survol-preuve.webp` | Au survol d'une capacité : la vignette de preuve rattachée à un projet réel |
-| `04-accueil-4-projets.webp` | Les 4 projets mis en avant et le bouton « Voir tous les projets » |
-| `05-accueil-loupe-scrollante.webp` | Au survol d'un projet : la loupe qui fait défiler le site réel |
+| `04-accueil-rangees-produits-clients.webp` | Les deux rangées défilantes, « Mes produits » et « Projets clients », intitulés au-dessus des cartes |
+| `05-accueil-loupe-scrollante.webp` | Au survol d'un projet : la loupe qui parcourt le site réel (ici 3 s après le survol) |
 | `06-accueil-pleine-page.webp` | La page d'accueil entière |
 
 ## Page « Mes projets » (`/projets`)
@@ -38,6 +38,13 @@ barres fixes neutralisées pour qu'elles ne se répètent pas.
 | `13-apps-badges-bientot.webp` | Memory Pilot : Google Play actif, App Store en « Bientôt » |
 | `14-apps-pleine-page.webp` | La page entière |
 
+## Parcours et stack
+
+| Fichier | Ce qu'il montre |
+| --- | --- |
+| `18-experiences-logos.webp` | Les vrais logos des entreprises, en grand à droite de chaque expérience |
+| `19-stack-technique.webp` | Les 36 outils rangés en 6 familles de taille égale, chacun avec son usage réel |
+
 ## Mobile (390 × 844, densité ×2)
 
 | Fichier | Ce qu'il montre |
@@ -45,3 +52,10 @@ barres fixes neutralisées pour qu'elles ne se répètent pas.
 | `15-mobile-accueil-pleine-page.webp` | Accueil |
 | `16-mobile-projets-pleine-page.webp` | Mes projets |
 | `17-mobile-apps-pleine-page.webp` | Mes applications |
+
+## Audit PageSpeed
+
+`_pagespeed.md` donne les notes Lighthouse relevées sur le build de
+production, en profil mobile bridé et en profil bureau, ainsi que la liste
+des corrections qui ont permis d'y arriver. Les mesures brutes sont dans
+`_pagespeed-mobile.json` et `_pagespeed-desktop.json`.

@@ -36,7 +36,8 @@ export default function ExperienceSection() {
         '3 langues supportées'
       ],
       color: 'bg-pink-500',
-      companyBadge: 'bg-pink-100 text-pink-700'
+      companyBadge: 'bg-pink-100 text-pink-700',
+      logos: [{ src: '/logos/messages.png', width: 239, height: 107, alt: 'Messages' }]
     },
     {
       period: 'SEPTEMBRE 2024 - SEPTEMBRE 2025',
@@ -49,7 +50,11 @@ export default function ExperienceSection() {
         'Dashboards Power BI & Tableau'
       ],
       color: 'bg-blue-500',
-      companyBadge: 'bg-blue-100 text-blue-700'
+      companyBadge: 'bg-blue-100 text-blue-700',
+      logos: [
+        { src: '/logos/sopra-steria.png', width: 197, height: 26, alt: 'Sopra Steria' },
+        { src: '/logos/airbus.svg', width: 200, height: 36, alt: 'Airbus' },
+      ]
     },
     {
       period: 'JUILLET 2024 - SEPTEMBRE 2024',
@@ -62,12 +67,13 @@ export default function ExperienceSection() {
         'Monitoring Grafana'
       ],
       color: 'bg-amber-700',
-      companyBadge: 'bg-amber-100 text-amber-800'
+      companyBadge: 'bg-amber-100 text-amber-800',
+      logos: [{ src: '/logos/weenav.svg', width: 162, height: 60, alt: 'Weenav' }]
     },
   ];
 
   return (
-    <section ref={sectionRef} id="experiences" className="py-20 bg-gray-50">
+    <section ref={sectionRef} id="experiences" className="defer-render py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-16">
           {/* Left side - Header */}
@@ -126,7 +132,8 @@ export default function ExperienceSection() {
                     <div className={`absolute left-0 top-1 w-4 h-4 ${exp.color} rounded-full border-4 border-white shadow-md`}></div>
 
                     {/* Card */}
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-gray-200 transition-all duration-300">
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-gray-200 transition-all duration-300 flex flex-col sm:flex-row sm:items-start gap-5 sm:gap-8">
+                      <div className="flex-1 min-w-0 order-2 sm:order-1">
                       <div className="flex flex-wrap items-center gap-3 mb-3">
                         <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                           {exp.period}
@@ -155,6 +162,23 @@ export default function ExperienceSection() {
                           >
                             {highlight}
                           </span>
+                        ))}
+                      </div>
+                      </div>
+
+                      {/* Logos de l'entreprise, à droite de la carte */}
+                      <div className="order-1 sm:order-2 shrink-0 flex flex-row sm:flex-col items-start sm:items-end gap-4 sm:gap-5 sm:w-[190px]">
+                        {exp.logos.map((logo) => (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            key={logo.src}
+                            src={logo.src}
+                            alt={logo.alt}
+                            width={logo.width}
+                            height={logo.height}
+                            loading="lazy"
+                            className="h-auto w-auto max-h-10 max-w-[130px] object-contain sm:max-h-16 sm:max-w-[190px]"
+                          />
                         ))}
                       </div>
                     </div>

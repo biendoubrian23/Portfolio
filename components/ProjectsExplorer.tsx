@@ -40,7 +40,7 @@ export default function ProjectsExplorer() {
               {item.label}
               <span
                 className={`text-xs font-bold ${
-                  filter === item.id ? 'text-blue-300' : 'text-gray-400'
+                  filter === item.id ? 'text-blue-300' : 'text-gray-500'
                 }`}
               >
                 {item.count}
@@ -64,7 +64,7 @@ export default function ProjectsExplorer() {
                   </p>
                 </div>
               </div>
-              <span className="text-sm font-semibold uppercase tracking-wider text-gray-400">
+              <span className="text-sm font-semibold uppercase tracking-wider text-gray-500">
                 {clientProjects.length} projets
               </span>
             </header>
@@ -93,7 +93,7 @@ export default function ProjectsExplorer() {
                   </p>
                 </div>
               </div>
-              <span className="text-sm font-semibold uppercase tracking-wider text-gray-400">
+              <span className="text-sm font-semibold uppercase tracking-wider text-gray-500">
                 {productProjects.length} produits
               </span>
             </header>

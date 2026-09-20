@@ -26,9 +26,9 @@ export type Project = {
   cover: string;
   /** Capture pleine page, défilée au survol dans la loupe. */
   preview: string;
+  /** Dimensions réelles de cette capture : elles évitent tout décalage de mise en page. */
+  previewSize: { width: number; height: number };
   stores?: { ios?: StoreLink; android?: StoreLink };
-  /** Mis en avant sur la page d'accueil (4 projets). */
-  featured?: boolean;
 };
 
 export const projects: Project[] = [
@@ -45,7 +45,7 @@ export const projects: Project[] = [
     status: 'En production',
     url: 'https://www.cosme-check.com',
     platforms: ['web', 'ios', 'android'],
-    stack: ['Expo / React Native', 'Next.js', 'Supabase', 'RevenueCat', 'Python', 'LLM'],
+    stack: ['Expo / React Native', 'OCR tesseract.js', 'SDK Anthropic', 'TanStack Query', 'RevenueCat', 'Python'],
     highlights: [
       'Triple scan : code-barres, OCR de la liste INCI, saisie manuelle',
       'Base d’ingrédients construite depuis le règlement CE 1223/2009 et CosIng',
@@ -54,11 +54,11 @@ export const projects: Project[] = [
     colors: { from: '#8B5CF6', to: '#F43F5E', ink: '#2E1065' },
     cover: '/projects/cosmecheck-cover.webp',
     preview: '/projects/cosmecheck-full.webp',
+    previewSize: { width: 800, height: 3184 },
     stores: {
       ios: { url: 'https://apps.apple.com/app/id6803527040' },
       android: { url: 'https://play.google.com/store/apps/details?id=com.cosmecheck.app' },
     },
-    featured: true,
   },
   {
     slug: 'revealchat',
@@ -72,7 +72,7 @@ export const projects: Project[] = [
     status: 'En production',
     url: 'https://revealchat.fr',
     platforms: ['web', 'ios', 'android'],
-    stack: ['Expo / React Native', 'Next.js', 'Supabase Edge Functions', 'RevenueCat', 'Sentry'],
+    stack: ['expo-share-intent', 'Supabase Edge Functions', 'RevenueCat', 'AppsFlyer', 'Sentry', 'Next.js 16'],
     highlights: [
       'Import direct depuis WhatsApp via une extension de partage iOS et Android',
       'Analyse par axes relationnels calculée côté serveur',
@@ -81,11 +81,11 @@ export const projects: Project[] = [
     colors: { from: '#3B0F2E', to: '#8C1D3F', ink: '#3B0F2E' },
     cover: '/projects/revealchat-cover.webp',
     preview: '/projects/revealchat-full.webp',
+    previewSize: { width: 800, height: 3279 },
     stores: {
       ios: { url: 'https://apps.apple.com/us/app/revealchat/id6803115828' },
       android: { url: 'https://play.google.com/store/apps/details?id=com.revealchat.app' },
     },
-    featured: true,
   },
   {
     slug: 'pixia-one',
@@ -99,7 +99,7 @@ export const projects: Project[] = [
     status: 'Web en production · apps en cours de publication',
     url: 'https://pixia-one.com',
     platforms: ['web', 'ios', 'android'],
-    stack: ['Expo / React Native', 'Next.js', 'Supabase', 'Stripe', 'Mobile Money', 'PostHog'],
+    stack: ['Stripe & PawaPay', 'Supabase RPC', 'Backblaze B2 + Cloudflare', 'react-globe.gl', 'Expo SDK 57', 'PostHog'],
     highlights: [
       'Boucle marketplace complète : budget réservé, candidature, livraison, règlement',
       'Gains réglés à la vue via un grand livre immuable et un cron de suivi',
@@ -108,6 +108,7 @@ export const projects: Project[] = [
     colors: { from: '#6C5CE7', to: '#A78BFA', ink: '#0C0C10' },
     cover: '/projects/pixia-one-cover.webp',
     preview: '/projects/pixia-one-full.webp',
+    previewSize: { width: 800, height: 4526 },
     stores: {
       ios: { url: null, soon: true },
       android: { url: null, soon: true },
@@ -119,13 +120,13 @@ export const projects: Project[] = [
     kind: 'produit',
     tagline: 'Ton second cerveau : confie, il te le rend',
     description:
-      "Memory Pilot sert de mémoire externe : un code, une date, une allergie, une idée — à la voix, par photo ou par partage — et l'application range l'information toute seule. On la redemande en langage naturel et elle ressort au bon moment, avec des rappels programmés. Tout est chiffré localement sur le téléphone.",
+      "Memory Pilot sert de mémoire externe : un code, une date, une allergie, une idée, à la voix, par photo ou par partage, et l'application range l'information toute seule. On la redemande en langage naturel et elle ressort au bon moment, avec des rappels programmés. Tout est chiffré localement sur le téléphone.",
     sector: 'Productivité',
     year: '2026',
     status: 'Android disponible · iOS en validation',
     url: 'https://memorypilot.fr',
     platforms: ['web', 'ios', 'android'],
-    stack: ['Expo / React Native', 'SQLCipher', 'ML Kit OCR', 'Next.js', 'Supabase', 'RevenueCat'],
+    stack: ['SQLCipher (op-sqlite)', 'ML Kit OCR', 'Widgets Android natifs', 'expo-speech-recognition', 'RevenueCat', 'Playwright'],
     highlights: [
       'Sept widgets Android natifs pour confier et retrouver sans ouvrir l’app',
       'Capture multimodale : dictée vocale, OCR hors-ligne, partage entrant',
@@ -134,6 +135,7 @@ export const projects: Project[] = [
     colors: { from: '#8A48FC', to: '#CD45E8', ink: '#1A1B27' },
     cover: '/projects/memory-pilot-cover.webp',
     preview: '/projects/memory-pilot-full.webp',
+    previewSize: { width: 800, height: 3916 },
     stores: {
       ios: { url: null, soon: true },
       android: { url: 'https://play.google.com/store/apps/details?id=com.memorypilot.app' },
@@ -151,7 +153,7 @@ export const projects: Project[] = [
     status: 'En production',
     url: 'https://www.testciviquefrance.fr',
     platforms: ['web'],
-    stack: ['Next.js', 'Supabase', 'Stripe', 'PWA', 'Recharts', 'PostHog'],
+    stack: ['Next.js 14 + PWA', 'Stripe webhooks signés', 'Recharts', 'Framer Motion', 'Supabase SSR', 'PostHog'],
     highlights: [
       'Cinq examens blancs avec suivi de progression et statistiques',
       'Abonnement Stripe avec webhook signé et back-office intégré',
@@ -160,6 +162,7 @@ export const projects: Project[] = [
     colors: { from: '#3B82F6', to: '#10B981', ink: '#1D4ED8' },
     cover: '/projects/test-civique-france-cover.webp',
     preview: '/projects/test-civique-france-full.webp',
+    previewSize: { width: 800, height: 3608 },
   },
 
   // ─────────────────────────  RÉALISATIONS CLIENTS  ─────────────────────────
@@ -169,13 +172,13 @@ export const projects: Project[] = [
     kind: 'client',
     tagline: 'Trading international de minerais stratégiques',
     description:
-      "Site corporate d'une société irlandaise de négoce et de sourcing de minerais critiques : cuivre, cobalt, tantalite, lithium, or. Il présente l'offre sur toute la chaîne d'approvisionnement — trading, logistique, financement, gestion du risque — et capte les demandes de partenariat. Trilingue anglais, français et espagnol, pour des acheteurs industriels internationaux.",
+      "Site corporate d'une société irlandaise de négoce et de sourcing de minerais critiques : cuivre, cobalt, tantalite, lithium, or. Il présente l'offre sur toute la chaîne d'approvisionnement (trading, logistique, financement, gestion du risque) et capte les demandes de partenariat. Trilingue anglais, français et espagnol, pour des acheteurs industriels internationaux.",
     sector: 'Négoce de matières premières',
     year: '2025',
     status: 'Livré · en production',
     url: 'https://alphaiesltd.com',
     platforms: ['web'],
-    stack: ['Next.js 15', 'TypeScript', 'Tailwind CSS', 'next-intl', 'Framer Motion', 'Resend'],
+    stack: ['next-intl (EN/FR/ES)', 'Resend', 'next/og', 'Framer Motion', 'Next.js 15', 'Tailwind v4'],
     highlights: [
       'Trilingue EN/FR/ES avec hreflang et sitemap multilingue générés',
       'Formulaire de contact serveur avec e-mails transactionnels aux couleurs de la marque',
@@ -184,7 +187,7 @@ export const projects: Project[] = [
     colors: { from: '#c9a553', to: '#f6efde', ink: '#111114' },
     cover: '/projects/alpha-ies-cover.webp',
     preview: '/projects/alpha-ies-full.webp',
-    featured: true,
+    previewSize: { width: 800, height: 4466 },
   },
   {
     slug: 'lumiere-du-monde',
@@ -192,13 +195,13 @@ export const projects: Project[] = [
     kind: 'client',
     tagline: 'Site et back-office d’un centre de yoga tantrique',
     description:
-      "Site officiel d'une association congolaise de yoga tantrique : quinze pages éditoriales, formulaires de contact et de don. Un back-office sur mesure permet à l'association de modifier tous les textes, images, lettres et e-mails sans développeur. La « boîte aux lettres universelle » — écrire, recevoir, modérer — constitue le cœur relationnel du site.",
+      "Site officiel d'une association congolaise de yoga tantrique : quinze pages éditoriales, formulaires de contact et de don. Un back-office sur mesure permet à l'association de modifier tous les textes, images, lettres et e-mails sans développeur. La « boîte aux lettres universelle » (écrire, recevoir, modérer) constitue le cœur relationnel du site.",
     sector: 'Association · Spiritualité',
     year: '2026',
     status: 'Livré · en production',
     url: 'https://www.lumiere-du-monde.com',
     platforms: ['web'],
-    stack: ['Next.js 16', 'React 19', 'Supabase', 'Brevo', 'TypeScript'],
+    stack: ['CMS propriétaire', 'Next.js 16 (RSC)', 'Brevo', 'Supabase Postgres', 'sharp', 'llms.txt'],
     highlights: [
       'Back-office propriétaire : édition champ par champ, lettres, abonnés, gabarits d’e-mails',
       'API d’envoi protégée : champ piège, limitation par IP, vérification d’origine',
@@ -207,7 +210,7 @@ export const projects: Project[] = [
     colors: { from: '#4B2A7B', to: '#CDA06C', ink: '#4B2A7B' },
     cover: '/projects/lumiere-du-monde-cover.webp',
     preview: '/projects/lumiere-du-monde-full.webp',
-    featured: true,
+    previewSize: { width: 800, height: 1493 },
   },
   {
     slug: 'energie-stat',
@@ -221,7 +224,7 @@ export const projects: Project[] = [
     status: 'Livré',
     url: 'https://energie-stat.vercel.app/fr',
     platforms: ['web'],
-    stack: ['Next.js 16', 'React 19', 'Tailwind CSS', 'next-intl', 'TypeScript'],
+    stack: ['next-intl (fr-CA/en-CA)', 'Design tokens Tailwind v4', 'JSON-LD local', 'Pipeline sharp', 'Next.js 16'],
     highlights: [
       'Bilingue fr-CA / en-CA, sans aucun texte codé en dur',
       'Couche SEO locale : JSON-LD ProfessionalService avec zones desservies par ville',
@@ -230,6 +233,7 @@ export const projects: Project[] = [
     colors: { from: '#2b8159', to: '#f5b731', ink: '#1b2a3a' },
     cover: '/projects/energie-stat-cover.webp',
     preview: '/projects/energie-stat-full.webp',
+    previewSize: { width: 800, height: 3993 },
   },
   {
     slug: 'matricx-consulting',
@@ -243,7 +247,7 @@ export const projects: Project[] = [
     status: 'Livré · en production',
     url: 'https://matricxconsulting.com',
     platforms: ['web'],
-    stack: ['React 19', 'Vite', 'Sanity CMS', 'Tailwind CSS', 'Framer Motion', 'PWA'],
+    stack: ['Sanity CMS', 'Vite + React 19', 'PWA installable', 'Netlify Functions', 'react-router 7', 'Framer Motion'],
     highlights: [
       'Contenu bilingue FR/EN entièrement piloté par le client depuis Sanity',
       'PWA complète et double cible de déploiement avec en-têtes de sécurité',
@@ -252,6 +256,7 @@ export const projects: Project[] = [
     colors: { from: '#FDC300', to: '#0080AF', ink: '#575756' },
     cover: '/projects/matricx-consulting-cover.webp',
     preview: '/projects/matricx-consulting-full.webp',
+    previewSize: { width: 800, height: 4344 },
   },
   {
     slug: 'pristyle',
@@ -265,7 +270,7 @@ export const projects: Project[] = [
     status: 'Livré · en production',
     url: 'https://pristyle.vercel.app',
     platforms: ['web'],
-    stack: ['Next.js 16', 'React 19', 'Supabase', 'CSS Modules', 'next/font'],
+    stack: ['Supabase (catalogue)', 'Next.js 16 · unstable_cache', 'CSS Modules', 'next/font', 'WebP pré-optimisé'],
     highlights: [
       'Catalogue dynamique : catégories, sous-catégories, produits et galeries',
       'Sitemap généré depuis la base et redirections 301 des anciennes URLs',
@@ -274,12 +279,12 @@ export const projects: Project[] = [
     colors: { from: '#C8A87E', to: '#1A1A1A', ink: '#1A1A1A' },
     cover: '/projects/pristyle-cover.webp',
     preview: '/projects/pristyle-full.webp',
+    previewSize: { width: 800, height: 4790 },
   },
 ];
 
 export const clientProjects = projects.filter((p) => p.kind === 'client');
 export const productProjects = projects.filter((p) => p.kind === 'produit');
-export const featuredProjects = projects.filter((p) => p.featured);
 
 export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);

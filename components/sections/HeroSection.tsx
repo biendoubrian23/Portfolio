@@ -39,6 +39,7 @@ export default function HeroSection() {
                   alt="Biendou Brian"
                   width={459}
                   height={568}
+                  sizes="(max-width: 640px) 380px, 459px"
                   className="object-cover w-full h-full object-top"
                   priority
                 />
@@ -56,7 +57,7 @@ export default function HeroSection() {
               {/* Badge "For Freelance" */}
               <div className="absolute top-8 -left-4 w-[106px] h-[106px] bg-white rounded-full border-2 border-black flex items-center justify-center" style={{animation: 'scaleIn 0.8s ease-out 1s both'}}>
                 <div className="relative w-full h-full">
-                  <svg viewBox="0 0 100 100" className="w-full h-full" style={{animation: 'rotate 10s linear infinite'}}>
+                  <svg viewBox="0 0 100 100" className="w-full h-full" style={{animation: 'rotate 10s linear infinite', willChange: 'transform'}}>
                     <defs>
                       <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/>
                     </defs>
@@ -89,7 +90,7 @@ export default function HeroSection() {
             <a href="/projets#clients" className="inline-block px-7 py-3.5 bg-white border-2 border-black rounded-2xl text-base font-semibold hover:bg-black hover:text-white hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,1)]">
               Mes réalisations
             </a>
-            <a href="/apps" className="inline-block px-7 py-3.5 bg-purple-500 text-white border-2 border-black rounded-2xl text-base font-semibold hover:bg-purple-600 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,1)]">
+            <a href="/apps" className="inline-block px-7 py-3.5 bg-purple-700 text-white border-2 border-black rounded-2xl text-base font-semibold hover:bg-purple-800 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,1)]">
               Mes apps
             </a>
           </div>

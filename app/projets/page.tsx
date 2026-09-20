@@ -3,12 +3,12 @@ import ProjectsExplorer from '@/components/ProjectsExplorer';
 import { clientProjects, productProjects } from '@/lib/projects';
 
 export const metadata: Metadata = {
-  title: 'Mes projets — réalisations clients et produits',
+  title: 'Mes projets : réalisations clients et produits',
   description:
-    "Tous les projets de Brian Biendou : sites web et plateformes livrés à des clients (négoce international, géothermie, conseil, mode, association) et applications mobiles iOS et Android que j'édite — CosmeCheck, RevealChat, Pixia One, Memory Pilot, Test Civique France.",
+    "Tous les projets de Brian Biendou : sites web et plateformes livrés à des clients (négoce international, géothermie, conseil, mode, association) et applications mobiles iOS et Android que j'édite : CosmeCheck, RevealChat, Pixia One, Memory Pilot, Test Civique France.",
   alternates: { canonical: '/projets' },
   openGraph: {
-    title: 'Mes projets — Brian Biendou',
+    title: 'Mes projets | Brian Biendou',
     description:
       'Réalisations clients et produits mobiles en production : 10 projets, tous accessibles en ligne.',
     url: '/projets',
@@ -41,7 +41,7 @@ export default function ProjetsPage() {
           </h1>
           <p className="mx-auto max-w-2xl text-lg leading-relaxed text-gray-600">
             D&apos;un côté les sites que je livre à mes clients, de l&apos;autre les applications
-            que j&apos;édite moi-même. Tout ce qui est listé ici tourne réellement — survolez une
+            que j&apos;édite moi-même. Tout ce qui est listé ici tourne réellement : survolez une
             carte pour parcourir le site sans quitter la page.
           </p>
         </div>

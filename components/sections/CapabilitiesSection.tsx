@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import Reveal from '@/components/Reveal';
 import { getPointer } from '@/lib/pointer';
+import { AndroidGlyph, AppleGlyph } from '@/components/PlatformGlyphs';
 import {
   BarChart3,
   Bell,
@@ -131,11 +132,31 @@ const capabilities: Capability[] = [
   },
 ];
 
-const stats = [
+/** Nombre d'exemplaires de la liste dans la piste : il en reste toujours
+ *  assez hors ecran pour qu'aucun vide n'apparaisse, meme sur un tres grand
+ *  moniteur. La piste recule d'un exemplaire, soit 1/REPEATS de sa largeur. */
+const REPEATS = 4;
+const SHIFT = `-${(100 / REPEATS).toFixed(4)}%`;
+
+const stats: Array<{ value: string; label: string; platforms?: boolean }> = [
   { value: '10', label: 'projets en production' },
-  { value: '4', label: 'apps mobiles développées' },
+  { value: '4', label: 'apps mobiles développées', platforms: true },
   { value: '5', label: 'clients accompagnés' },
 ];
+
+/** Les deux plateformes, en pastilles qui se chevauchent légèrement. */
+function PlatformDots() {
+  return (
+    <span className="flex items-center" role="img" aria-label="iOS et Android">
+      <span className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-black bg-white">
+        <AppleGlyph className="h-3.5 w-3.5 text-black" />
+      </span>
+      <span className="-ml-2 flex h-7 w-7 items-center justify-center rounded-full border-2 border-black bg-white">
+        <AndroidGlyph className="h-4 w-4 text-[#3DDC84]" />
+      </span>
+    </span>
+  );
+}
 
 /* ── Vignette d'aperçu qui suit le curseur ─────────────────────────────── */
 
@@ -217,7 +238,7 @@ function CapabilityPeek({ capability }: { capability: Capability | null }) {
           />
         </div>
         <div className="px-3.5 py-2.5">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
             Vu sur · {capability.project}
           </p>
           <p className="text-sm font-semibold leading-snug mt-0.5">{capability.proof}</p>
@@ -268,7 +289,7 @@ export default function CapabilitiesSection() {
   return (
     <section
       id="apropos"
-      className="relative overflow-hidden border-t-2 border-black bg-white py-20 lg:py-24"
+      className="defer-render relative overflow-hidden border-t-2 border-black bg-white py-20 lg:py-24"
     >
       {/* Trame de fond discrète */}
       <div
@@ -316,8 +337,11 @@ export default function CapabilitiesSection() {
           <Reveal className="flex shrink-0 gap-8" delay={160}>
             {stats.map((stat) => (
               <div key={stat.label}>
-                <p className="text-4xl font-bold leading-none lg:text-5xl">{stat.value}</p>
-                <p className="mt-1.5 max-w-[110px] text-[11px] font-semibold uppercase leading-tight tracking-wider text-gray-400">
+                <div className="flex items-center gap-2.5">
+                  <p className="text-4xl font-bold leading-none lg:text-5xl">{stat.value}</p>
+                  {stat.platforms && <PlatformDots />}
+                </div>
+                <p className="mt-1.5 max-w-[110px] text-[11px] font-semibold uppercase leading-tight tracking-wider text-gray-500">
                   {stat.label}
                 </p>
               </div>
@@ -329,8 +353,11 @@ export default function CapabilitiesSection() {
       {/* Carousel infini — deux rangées en sens opposés */}
       <Reveal className="relative mt-14 flex flex-col gap-5" delay={260}>
         <div className="marquee-viewport overflow-hidden">
-          <div className="marquee-track" style={{ '--marquee-duration': '52s' } as React.CSSProperties}>
-            {[...rowOne, ...rowOne].map((capability, i) => (
+          <div
+            className="marquee-track"
+            style={{ '--marquee-duration': '52s', '--marquee-shift': SHIFT } as React.CSSProperties}
+          >
+            {Array.from({ length: REPEATS }, () => rowOne).flat().map((capability, i) => (
               <CapabilityCard key={`${capability.title}-${i}`} capability={capability} onHover={setHovered} />
             ))}
           </div>
@@ -340,9 +367,9 @@ export default function CapabilitiesSection() {
           <div
             className="marquee-track"
             data-direction="right"
-            style={{ '--marquee-duration': '58s' } as React.CSSProperties}
+            style={{ '--marquee-duration': '58s', '--marquee-shift': SHIFT } as React.CSSProperties}
           >
-            {[...rowTwo, ...rowTwo].map((capability, i) => (
+            {Array.from({ length: REPEATS }, () => rowTwo).flat().map((capability, i) => (
               <CapabilityCard key={`${capability.title}-${i}`} capability={capability} onHover={setHovered} />
             ))}
           </div>

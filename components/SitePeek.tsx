@@ -13,6 +13,8 @@ const VIEW_HEIGHT = HEIGHT - CHROME_HEIGHT;
 type Props = {
   /** Capture pleine page du site, défilée automatiquement. */
   src: string;
+  /** Dimensions réelles de la capture, déclarées pour éviter tout décalage. */
+  size: { width: number; height: number };
   /** URL affichée dans la barre du navigateur factice. */
   url?: string | null;
   active: boolean;
@@ -25,13 +27,25 @@ type Props = {
  * comme si on le parcourait. Rendu dans un portail : les cartes projet portent
  * une transformation 3D, qui piégerait un élément `fixed`.
  */
-export default function SitePeek({ src, url, active, accent = '#3B82F6' }: Props) {
+/** Vitesse de lecture, en pixels par seconde : la meme pour tous les sites. */
+const SCROLL_SPEED = 130;
+
+export default function SitePeek({ src, size, url, active, accent = '#3B82F6' }: Props) {
   const [loaded, setLoaded] = useState(false);
+  const [duration, setDuration] = useState(30);
   const followerRef = useRef<HTMLDivElement>(null);
   const target = useRef({ x: 0, y: 0 });
   const current = useRef({ x: 0, y: 0 });
   const rafId = useRef<number | null>(null);
   const placed = useRef(false);
+
+  /** La duree depend de la longueur reelle du site, pour une vitesse constante. */
+  const measure = (img: HTMLImageElement) => {
+    if (!img.naturalWidth) return;
+    const rendered = (WIDTH * img.naturalHeight) / img.naturalWidth;
+    setDuration(Math.round(rendered / SCROLL_SPEED));
+    setLoaded(true);
+  };
 
   useEffect(() => {
     if (!active) {
@@ -117,27 +131,37 @@ export default function SitePeek({ src, url, active, accent = '#3B82F6' }: Props
           </span>
         </div>
 
-        {/* Capture pleine page en défilement automatique */}
+        {/* Capture pleine page, en défilement sans fin */}
         <div className="relative overflow-hidden bg-white" style={{ height: VIEW_HEIGHT }}>
-          {/* Balise <img> volontaire : la capture doit garder sa hauteur naturelle
-              pour que le défilement en `translateY(-100%)` couvre toute la page. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={src}
-            alt=""
-            // Une capture deja en cache est complete avant meme l'evenement de chargement
-            ref={(el) => {
-              if (el?.complete) setLoaded(true);
-            }}
-            onLoad={() => setLoaded(true)}
-            className={`block w-full h-auto ${loaded ? 'peek-scroller' : ''}`}
-            style={
-              {
-                '--peek-height': `${VIEW_HEIGHT}px`,
-                '--peek-duration': '13s',
-              } as React.CSSProperties
-            }
-          />
+          <div
+            className={loaded ? 'peek-scroller' : undefined}
+            style={{ '--peek-duration': `${duration}s` } as React.CSSProperties}
+          >
+            {/* Deux exemplaires : quand le premier sort par le haut, le second
+                prend exactement sa place et la boucle repart sans couture. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt=""
+              width={size.width}
+              height={size.height}
+              // Une capture deja en cache est complete avant meme l'evenement de chargement
+              ref={(el) => {
+                if (el?.complete) measure(el);
+              }}
+              onLoad={(e) => measure(e.currentTarget)}
+              className="block h-auto w-full"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt=""
+              aria-hidden="true"
+              width={size.width}
+              height={size.height}
+              className="block h-auto w-full"
+            />
+          </div>
         </div>
       </div>
     </div>,

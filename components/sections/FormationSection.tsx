@@ -123,9 +123,9 @@ export default function FormationSection() {
                     {cert.logo}
                   </div>
                   <div>
-                    <h4 className="font-bold text-gray-900 text-xl group-hover:text-indigo-600 transition-colors">
+                    <h3 className="font-bold text-gray-900 text-xl group-hover:text-indigo-600 transition-colors">
                       {cert.name}
-                    </h4>
+                    </h3>
                     <p className="text-gray-500">{cert.issuer}</p>
                   </div>
                 </div>

@@ -1,24 +1,46 @@
 CAPTURES DE VERIFICATION -- portfolio brianbiendou.com
 ============================================================
 
-01-accueil-hero-3-boutons.webp -- Hero : les trois boutons Me contacter / Mes realisations / Mes apps
-02-savoir-faire-carousel.webp -- Section 2 : carousel infini des savoir-faire, icones colorees sans bloc de fond
-03-savoir-faire-survol-preuve.webp -- Survol d une capacite : vignette de preuve rattachee a un projet reel
-04-accueil-4-projets.webp -- Quatre projets reels mis en avant, plus le bouton Voir tous les projets
-05-accueil-loupe-scrollante.webp -- Survol d un projet : la loupe fait defiler le site reel sous le curseur
-06-accueil-pleine-page.webp -- page entiere 1440x8154 (10 tranches)
+01-accueil-hero-3-boutons.webp -- Hero : trois boutons, et « Me contacter » dans la barre a gauche du LinkedIn
+02-savoir-faire-carousel.webp -- Savoir-faire : files sans fin, icones colorees sans bloc, pastilles iOS et Android pres du chiffre
+03-savoir-faire-survol-preuve.webp -- Survol d une capacite : la vignette de preuve renvoie a un projet reel
+18-experiences-logos.webp -- Parcours : les vrais logos des entreprises, a droite de chaque experience
+04-accueil-rangees-produits-clients.webp -- Deux files : « Mes produits » et « Projets clients », intitules au-dessus, badges de stores alignes
+05-accueil-loupe-scrollante.webp -- Survol d un projet : la loupe parcourt le site en boucle, sans jamais buter en bas
+19-stack-technique.webp -- Stack technique : 35 outils ranges en 6 familles, chacun avec son usage reel
+06-accueil-pleine-page.webp -- Accueil en entier (1440x8772 px CSS, 10 tranches)
 07-projets-entete.webp -- Page /projets : entete et filtres
-08-projets-filtre-clients.webp -- Filtre Realisations clients : les 5 projets livres a des clients
-09-projets-filtre-produits.webp -- Filtre Mes produits : les 5 produits avec leurs badges de stores
-10-projets-pleine-page.webp -- page entiere 1440x3904 (5 tranches)
-11-apps-entete.webp -- Page /apps refaite : les deux anciennes apps ont ete retirees
+08-projets-filtre-clients.webp -- Filtre « Realisations clients » : les 5 projets livres, stacks toutes differentes
+09-projets-filtre-produits.webp -- Filtre « Mes produits » : les 5 produits, badges de stores alignes
+10-projets-pleine-page.webp -- Page projets en entier (1440x4032 px CSS, 5 tranches)
+11-apps-entete.webp -- Page /apps : les deux anciennes apps ont ete retirees
 12-apps-cosmecheck-badges.webp -- CosmeCheck : badges App Store et Google Play actifs
 13-apps-badges-bientot.webp -- Memory Pilot : Google Play actif, App Store grise tant que la fiche n est pas ouverte
-14-apps-pleine-page.webp -- page entiere 1440x4963 (6 tranches)
-15-mobile-accueil-pleine-page.webp -- page entiere 780x14830 (9 tranches)
-16-mobile-projets-pleine-page.webp -- page entiere 780x7611 (5 tranches)
-17-mobile-apps-pleine-page.webp -- page entiere 780x8991 (6 tranches)
+14-apps-pleine-page.webp -- Page applications en entier (1440x4997 px CSS, 6 tranches)
+15-mobile-accueil-pleine-page.webp -- Accueil sur telephone (390x14857 px CSS, 18 tranches)
+16-mobile-projets-pleine-page.webp -- Projets sur telephone (390x7826 px CSS, 10 tranches)
+17-mobile-apps-pleine-page.webp -- Applications sur telephone (390x9101 px CSS, 11 tranches)
 
 ERREURS CONSOLE / REQUETES ECHOUEES
 ----------------------------------------
-Aucune.
+Aucune erreur console sur les trois pages.
+
+Les lignes ci-dessous sont des prechargements du lien « Blog » que Next.js
+lance en fond et que le navigateur annule a la fermeture de l'onglet. La page
+/blog repond bien 200, et Lighthouse note 100 en bonnes pratiques sur les
+trois pages : ces annulations n'ont aucun effet pour le visiteur.
+
+/ requete echouee: http://localhost:3008/blog?_rsc=4n2cs
+/ requete echouee: http://localhost:3008/blog?_rsc=ydjbj
+/ requete echouee: http://localhost:3008/blog?_rsc=1pn8p
+/ requete echouee: http://localhost:3008/blog?_rsc=1r34m
+/ requete echouee: http://localhost:3008/blog?_rsc=nn07o
+/projets requete echouee: http://localhost:3008/blog?_rsc=1tsmz
+/projets requete echouee: http://localhost:3008/blog?_rsc=1owtp
+/projets requete echouee: http://localhost:3008/blog?_rsc=dnhjl
+/projets requete echouee: http://localhost:3008/blog?_rsc=kbo2l
+/projets requete echouee: http://localhost:3008/blog?_rsc=1f9py
+/apps requete echouee: http://localhost:3008/blog?_rsc=105yj
+/apps requete echouee: http://localhost:3008/blog?_rsc=1cgec
+/apps requete echouee: http://localhost:3008/blog?_rsc=wycmb
+/apps requete echouee: http://localhost:3008/blog?_rsc=3h7sc

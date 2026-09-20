@@ -93,11 +93,6 @@ export default function ProjectCard({
             className="object-cover object-top transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
           />
 
-          {/* Catégorie */}
-          <span className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full border-2 border-black bg-white/95 backdrop-blur text-[10px] font-bold uppercase tracking-wider">
-            {project.kind === 'client' ? 'Projet client' : 'Mon produit'}
-          </span>
-
           {/* Invitation à survoler — masquée dès que la loupe s'ouvre */}
           <span className="absolute bottom-3 right-3 z-10 hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full border-2 border-black bg-white/95 backdrop-blur text-[10px] font-bold uppercase tracking-wider transition-opacity duration-200 group-hover:opacity-0">
             <ScanSearch className="w-3.5 h-3.5 text-blue-600 hint-pulse" strokeWidth={2.5} />
@@ -123,13 +118,13 @@ export default function ProjectCard({
                 project.name
               )}
             </h3>
-            <span className="shrink-0 flex items-center gap-1.5 text-gray-400">
+            <span className="shrink-0 flex items-center gap-1.5 text-gray-500">
               {project.platforms.includes('web') && <Globe className="w-4 h-4 text-blue-600" strokeWidth={2} />}
               {hasMobile && <Smartphone className="w-4 h-4 text-purple-600" strokeWidth={2} />}
             </span>
           </div>
 
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-400 mb-3">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mb-3">
             {project.sector} · {project.year}
           </p>
 
@@ -149,24 +144,24 @@ export default function ProjectCard({
             ))}
           </div>
 
-          {/* Boutiques d'applications */}
-          {project.stores && <StoreBadges stores={project.stores} compact className="mb-4" />}
+          {/* Pied de carte : colle en bas pour que les badges d'une meme rangee
+              soient tous alignes, quelle que soit la longueur du texte au-dessus. */}
+          <div className="mt-auto flex flex-col gap-4 pt-2">
+            {project.stores && <StoreBadges stores={project.stores} compact />}
 
-          {/* Lien vers le site */}
-          <div className="mt-auto pt-1">
             {project.url ? (
               <a
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-2 text-sm font-semibold border-b-2 border-black pb-0.5 hover:gap-3 hover:text-blue-600 hover:border-blue-600 transition-all duration-300"
+                className="inline-flex items-center gap-2 self-start text-sm font-semibold border-b-2 border-black pb-0.5 hover:gap-3 hover:text-blue-600 hover:border-blue-600 transition-all duration-300"
               >
                 Voir le site en ligne
                 <ArrowUpRight className="w-4 h-4" strokeWidth={2.5} />
               </a>
             ) : (
-              <span className="text-sm font-medium text-gray-400">Projet privé</span>
+              <span className="self-start text-sm font-medium text-gray-500">Projet privé</span>
             )}
           </div>
         </div>
@@ -174,6 +169,7 @@ export default function ProjectCard({
 
       <SitePeek
         src={project.preview}
+        size={project.previewSize}
         url={project.url}
         active={peeking}
         accent={project.colors.from}

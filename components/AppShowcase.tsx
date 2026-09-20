@@ -9,6 +9,11 @@ const FRAME_HEIGHT = 420;
 export default function AppShowcase({ project, index }: { project: Project; index: number }) {
   const reversed = index % 2 === 1;
   const host = project.url?.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  // Une version allégée de la capture est servie aux petits écrans, où le
+  // cadre ne fait que quelques centaines de pixels de large.
+  const petiteCapture = project.preview.replace('-full.webp', '-full-480.webp');
+  const srcSet = `${petiteCapture} 480w, ${project.preview} 800w`;
+  const sizes = '(max-width: 1023px) 100vw, 56vw';
 
   return (
     <article
@@ -34,19 +39,33 @@ export default function AppShowcase({ project, index }: { project: Project; inde
           </div>
 
           <div className="relative overflow-hidden bg-white" style={{ height: FRAME_HEIGHT }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={project.preview}
-              alt={`Le site ${project.name}, parcouru de haut en bas`}
-              loading="lazy"
-              className="scroll-inner block h-auto w-full"
-              style={
-                {
-                  '--peek-height': `${FRAME_HEIGHT}px`,
-                  '--peek-duration': '26s',
-                } as React.CSSProperties
-              }
-            />
+            {/* Deux exemplaires de la capture : la boucle repart sans couture,
+                sans jamais buter en bas. */}
+            <div className="scroll-inner" style={{ '--peek-duration': '38s' } as React.CSSProperties}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={project.preview}
+                srcSet={srcSet}
+                sizes={sizes}
+                alt={`Le site ${project.name}, parcouru de haut en bas`}
+                loading="lazy"
+                width={project.previewSize.width}
+                height={project.previewSize.height}
+                className="block h-auto w-full"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={project.preview}
+                srcSet={srcSet}
+                sizes={sizes}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                width={project.previewSize.width}
+                height={project.previewSize.height}
+                className="block h-auto w-full"
+              />
+            </div>
 
             {/* Indice de survol */}
             <span className="pointer-events-none absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full border-2 border-black bg-white/95 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider backdrop-blur transition-opacity duration-300 group-hover:opacity-0">
@@ -66,7 +85,7 @@ export default function AppShowcase({ project, index }: { project: Project; inde
               background: `linear-gradient(90deg, ${project.colors.from}, ${project.colors.to})`,
             }}
           />
-          <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-gray-500">
             {project.sector} · {project.status}
           </span>
         </div>
@@ -98,7 +117,7 @@ export default function AppShowcase({ project, index }: { project: Project; inde
         {/* Téléchargement */}
         {project.stores && (
           <div className="mb-6">
-            <p className="mb-2.5 text-[11px] font-bold uppercase tracking-wider text-gray-400">
+            <p className="mb-2.5 text-[11px] font-bold uppercase tracking-wider text-gray-500">
               Télécharger l&apos;application
             </p>
             <StoreBadges stores={project.stores} />

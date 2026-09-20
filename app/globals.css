@@ -247,20 +247,26 @@ body {
    Carousel infini — section « Ce que je construis »
    ═══════════════════════════════════════════════════════════ */
 
+/*
+ * La piste contient plusieurs exemplaires de la liste et recule d'exactement
+ * un exemplaire : a l'instant ou le premier sort par la gauche, le suivant
+ * occupe la meme place, et la file repart sans jamais se vider. Le nombre
+ * d'exemplaires est choisi pour qu'il reste toujours de quoi remplir l'ecran,
+ * meme tres large ; `--marquee-shift` vaut alors 1 / nombre d'exemplaires.
+ */
 @keyframes marquee-left {
   from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(var(--marquee-shift, -50%), 0, 0); }
 }
 
 @keyframes marquee-right {
-  from { transform: translate3d(-50%, 0, 0); }
+  from { transform: translate3d(var(--marquee-shift, -50%), 0, 0); }
   to   { transform: translate3d(0, 0, 0); }
 }
 
 .marquee-track {
   display: flex;
   width: max-content;
-  will-change: transform;
   animation: marquee-left var(--marquee-duration, 48s) linear infinite;
 }
 
@@ -287,32 +293,21 @@ body {
    ═══════════════════════════════════════════════════════════ */
 
 /*
- * Descente immediate : la capture part vite des la premiere image, puis
- * freine longuement en approchant du bas, comme une course qui ralentit a
- * l'arrivee. Courte pause en bas, puis remontee plus discrete.
- * Les fonctions de temps sont portees par les etapes, pas par la regle.
+ * Defilement sans fin : la capture est posee deux fois l'une sous l'autre et
+ * la piste recule d'exactement une hauteur. Au moment ou la premiere copie
+ * sort par le haut, la seconde occupe la meme place au pixel pres — la boucle
+ * repart sans couture, sans jamais buter en bas ni remonter.
+ * La duree est calculee par le composant pour que tous les sites defilent a
+ * la meme vitesse, quelle que soit leur longueur.
  */
-@keyframes peek-scroll {
-  0% {
-    transform: translate3d(0, 0, 0);
-    animation-timing-function: cubic-bezier(0.08, 0.82, 0.2, 1);
-  }
-  62% {
-    transform: translate3d(0, calc(-100% + var(--peek-height)), 0);
-    animation-timing-function: linear;
-  }
-  72% {
-    transform: translate3d(0, calc(-100% + var(--peek-height)), 0);
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
+@keyframes peek-loop {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(0, -50%, 0); }
 }
 
 .peek-scroller {
   will-change: transform;
-  animation: peek-scroll var(--peek-duration, 13s) linear infinite;
+  animation: peek-loop var(--peek-duration, 30s) linear infinite;
 }
 
 @keyframes peek-in {
@@ -404,7 +399,7 @@ body {
    ═══════════════════════════════════════════════════════════ */
 
 .scroll-frame .scroll-inner {
-  animation: peek-scroll var(--peek-duration, 18s) linear infinite;
+  animation: peek-loop var(--peek-duration, 34s) linear infinite;
   animation-play-state: paused;
 }
 
@@ -435,4 +430,20 @@ body {
 /* Sur écran tactile, il n'y a pas de survol : le cadre défile de lui-même. */
 @media (hover: none) {
   .scroll-frame .scroll-inner { animation-play-state: running; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   Rendu différé des sections hors écran
+   ═══════════════════════════════════════════════════════════ */
+
+/*
+ * Le navigateur saute la mise en page de ces sections tant qu'elles sont
+ * loin du regard, puis les calcule à l'approche. La taille annoncée réserve
+ * la place pour que la barre de défilement ne saute pas ; `auto` la remplace
+ * par la hauteur réelle dès le premier rendu.
+ */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1100px;
 }

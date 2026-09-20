@@ -5,12 +5,12 @@ import AppShowcase from '@/components/AppShowcase';
 import { productProjects } from '@/lib/projects';
 
 export const metadata: Metadata = {
-  title: 'Mes applications — produits mobiles et web',
+  title: 'Mes applications : produits mobiles et web',
   description:
     "Les applications que Brian Biendou conçoit, développe et exploite : CosmeCheck (analyse de cosmétiques), RevealChat (analyse de conversations), Pixia One (marques et créateurs), Memory Pilot (mémoire externe) et Test Civique France. iOS, Android et web.",
   alternates: { canonical: '/apps' },
   openGraph: {
-    title: 'Mes applications — Brian Biendou',
+    title: 'Mes applications | Brian Biendou',
     description:
       'Cinq produits que je développe et exploite moi-même, sur iOS, Android et le web.',
     url: '/apps',
@@ -44,8 +44,9 @@ export default function AppsPage() {
             <br className="hidden sm:block" /> développe et exploite.
           </h1>
           <p className="mx-auto max-w-2xl text-lg leading-relaxed text-gray-600">
-            Pas des démos : {productProjects.length} produits complets — application mobile, site,
-            back-office, paiements et suivi — dont {storeCount} déjà disponibles sur les boutiques.
+            Pas des démos : {productProjects.length} produits complets (application mobile, site,
+            back-office, paiements et suivi), dont {storeCount} déjà disponibles sur les
+            boutiques.
           </p>
         </div>
       </section>
