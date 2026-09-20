@@ -1,6 +1,5 @@
 import HeroSection from '@/components/sections/HeroSection';
-import ServicesSection from '@/components/sections/ServicesSection';
-import AboutSection from '@/components/sections/AboutSection';
+import CapabilitiesSection from '@/components/sections/CapabilitiesSection';
 import AboutMeSection from '@/components/sections/AboutMeSection';
 import ExperienceSection from '@/components/sections/ExperienceSection';
 import PortfolioSection from '@/components/sections/PortfolioSection';
@@ -12,8 +11,7 @@ export default function Home() {
   return (
     <main className="bg-white">
       <HeroSection />
-      <AboutSection />
-      <ServicesSection />
+      <CapabilitiesSection />
       <AboutMeSection />
       <ExperienceSection />
       <PortfolioSection />

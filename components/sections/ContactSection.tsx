@@ -70,7 +70,7 @@ export default function ContactSection() {
               <div className="w-full max-w-[450px] mx-auto">
                 <div className="relative rounded-3xl overflow-hidden border-4 border-gray-200 shadow-xl">
                   <Image 
-                    src="/images/contact.png" 
+                    src="/images/contact.webp" 
                     alt="Contact"
                     width={450}
                     height={550}

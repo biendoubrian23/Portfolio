@@ -35,7 +35,7 @@ export default function HeroSection() {
               {/* Purple background with rounded corners */}
               <div className="w-[380px] h-[470px] sm:w-[459px] sm:h-[568px] bg-[#B8A8D8] rounded-[95px] overflow-hidden relative border-2 border-black">
                 <Image 
-                  src="/images/image_principale.png" 
+                  src="/images/image_principale.webp" 
                   alt="Biendou Brian"
                   width={459}
                   height={568}
@@ -79,17 +79,18 @@ export default function HeroSection() {
 
         {/* Buttons - Bottom on mobile, Inside left column on desktop */}
         <div className="w-full lg:w-1/2 lg:-mt-40">
-          <div className="flex flex-col items-center lg:items-start gap-4" style={{animation: 'fadeInUp 1s ease-out 0.6s both'}}>
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-              <a href="#portefeuille" className="inline-block px-7 py-3.5 border-2 border-black rounded-2xl text-base font-semibold hover:bg-black hover:text-white transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                Voir mes œuvres
-              </a>
-              <a href="/blog" className="inline-flex items-center gap-2 px-7 py-3.5 bg-blue-600 text-white border-2 border-black rounded-2xl text-base font-semibold hover:bg-blue-700 hover:scale-105 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                <span>Mes pensées tech</span>
-              </a>
-            </div>
-            <a href="/apps" className="inline-block w-auto lg:w-[200px] px-7 py-3.5 bg-purple-500 text-white border-2 border-black rounded-2xl text-base font-semibold hover:bg-purple-600 hover:scale-105 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-center">
-              Mes App
+          <div className="flex flex-wrap gap-4 justify-center lg:justify-start" style={{animation: 'fadeInUp 1s ease-out 0.6s both'}}>
+            <a href="#contact" className="group inline-flex items-center gap-2 px-7 py-3.5 bg-black text-white border-2 border-black rounded-2xl text-base font-semibold hover:bg-blue-600 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,1)]">
+              <span>Me contacter</span>
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+            <a href="/projets#clients" className="inline-block px-7 py-3.5 bg-white border-2 border-black rounded-2xl text-base font-semibold hover:bg-black hover:text-white hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,1)]">
+              Mes réalisations
+            </a>
+            <a href="/apps" className="inline-block px-7 py-3.5 bg-purple-500 text-white border-2 border-black rounded-2xl text-base font-semibold hover:bg-purple-600 hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[7px_7px_0px_0px_rgba(0,0,0,1)]">
+              Mes apps
             </a>
           </div>
         </div>

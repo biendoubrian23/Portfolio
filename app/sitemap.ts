@@ -34,6 +34,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'daily',
       priority: 0.9,
     },
+    // Tous les projets (réalisations clients + produits)
+    {
+      url: `${baseUrl}/projets`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    // Mes applications
+    {
+      url: `${baseUrl}/apps`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
     // Sections du portfolio
     {
       url: `${baseUrl}/#apropos`,

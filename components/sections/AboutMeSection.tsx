@@ -66,7 +66,7 @@ export default function AboutMeSection() {
                 }}
               >
                 <Image 
-                  src="/images/image_secondaire.png" 
+                  src="/images/image_secondaire.webp" 
                   alt="À propos de moi"
                   width={400}
                   height={520}

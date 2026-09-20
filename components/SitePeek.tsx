@@ -1,0 +1,141 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { getPointer } from '@/lib/pointer';
+
+const WIDTH = 440;
+const HEIGHT = 310;
+const CHROME_HEIGHT = 30;
+const VIEW_HEIGHT = HEIGHT - CHROME_HEIGHT;
+
+type Props = {
+  /** Capture pleine page du site, défilée automatiquement. */
+  src: string;
+  /** URL affichée dans la barre du navigateur factice. */
+  url?: string | null;
+  active: boolean;
+  /** Accent de la marque du projet, utilisé pour la lueur du panneau. */
+  accent?: string;
+};
+
+/**
+ * Hublot qui suit le curseur et fait défiler la capture pleine page du site,
+ * comme si on le parcourait. Rendu dans un portail : les cartes projet portent
+ * une transformation 3D, qui piégerait un élément `fixed`.
+ */
+export default function SitePeek({ src, url, active, accent = '#3B82F6' }: Props) {
+  const [loaded, setLoaded] = useState(false);
+  const followerRef = useRef<HTMLDivElement>(null);
+  const target = useRef({ x: 0, y: 0 });
+  const current = useRef({ x: 0, y: 0 });
+  const rafId = useRef<number | null>(null);
+  const placed = useRef(false);
+
+  useEffect(() => {
+    if (!active) {
+      placed.current = false;
+      return;
+    }
+
+    const place = (clientX: number, clientY: number) => {
+      const pad = 20;
+      let x = clientX + 30;
+      if (x + WIDTH + pad > window.innerWidth) x = clientX - WIDTH - 30;
+      x = Math.max(pad, Math.min(x, window.innerWidth - WIDTH - pad));
+
+      const y = Math.max(
+        pad,
+        Math.min(clientY - HEIGHT / 2, window.innerHeight - HEIGHT - pad)
+      );
+
+      target.current = { x, y };
+      if (!placed.current) {
+        current.current = { x, y };
+        placed.current = true;
+        if (followerRef.current) {
+          followerRef.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        }
+      }
+    };
+
+    // La souris peut être immobile à l'ouverture : on part de sa dernière position connue
+    const start = getPointer();
+    place(start.x, start.y);
+
+    const onMove = (e: MouseEvent) => place(e.clientX, e.clientY);
+    window.addEventListener('mousemove', onMove, { passive: true });
+
+    const tick = () => {
+      current.current.x += (target.current.x - current.current.x) * 0.16;
+      current.current.y += (target.current.y - current.current.y) * 0.16;
+      if (followerRef.current) {
+        followerRef.current.style.transform = `translate3d(${Math.round(current.current.x)}px, ${Math.round(current.current.y)}px, 0)`;
+      }
+      rafId.current = requestAnimationFrame(tick);
+    };
+    rafId.current = requestAnimationFrame(tick);
+
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      if (rafId.current) cancelAnimationFrame(rafId.current);
+    };
+  }, [active]);
+
+  // `active` ne passe à vrai que sur un survol : on est forcément côté client ici.
+  if (!active) return null;
+
+  const host = url ? url.replace(/^https?:\/\//, '').replace(/\/$/, '') : 'aperçu du site';
+
+  return createPortal(
+    <div
+      ref={followerRef}
+      className="fixed top-0 left-0 z-[90] pointer-events-none hidden lg:block"
+      aria-hidden="true"
+    >
+      <div
+        className="peek-panel rounded-2xl border-2 border-black bg-white overflow-hidden"
+        style={{
+          width: WIDTH,
+          height: HEIGHT,
+          boxShadow: `10px 10px 0px 0px rgba(0,0,0,1), 0 24px 60px -12px ${accent}66`,
+        }}
+      >
+        {/* Barre de navigateur factice */}
+        <div
+          className="flex items-center gap-2 px-3 border-b-2 border-black bg-[#f4f4f5]"
+          style={{ height: CHROME_HEIGHT }}
+        >
+          <span className="flex gap-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57] border border-black/20" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e] border border-black/20" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#28c840] border border-black/20" />
+          </span>
+          <span className="flex-1 truncate text-[10px] font-mono text-gray-500 bg-white rounded px-2 py-0.5 border border-gray-200">
+            {host}
+          </span>
+        </div>
+
+        {/* Capture pleine page en défilement automatique */}
+        <div className="relative overflow-hidden bg-white" style={{ height: VIEW_HEIGHT }}>
+          {/* Balise <img> volontaire : la capture doit garder sa hauteur naturelle
+              pour que le défilement en `translateY(-100%)` couvre toute la page. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={src}
+            alt=""
+            onLoad={() => setLoaded(true)}
+            className={`block w-full h-auto ${loaded ? 'peek-scroller' : ''}`}
+            style={
+              {
+                '--peek-height': `${VIEW_HEIGHT}px`,
+                '--peek-duration': '22s',
+              } as React.CSSProperties
+            }
+          />
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}

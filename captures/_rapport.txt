@@ -1,0 +1,24 @@
+CAPTURES DE VERIFICATION -- portfolio brianbiendou.com
+============================================================
+
+01-accueil-hero-3-boutons.webp -- Hero : les trois boutons Me contacter / Mes realisations / Mes apps
+02-savoir-faire-carousel.webp -- Section 2 : carousel infini des savoir-faire, icones colorees sans bloc de fond
+03-savoir-faire-survol-preuve.webp -- Survol d une capacite : vignette de preuve rattachee a un projet reel
+04-accueil-4-projets.webp -- Quatre projets reels mis en avant, plus le bouton Voir tous les projets
+05-accueil-loupe-scrollante.webp -- Survol d un projet : la loupe fait defiler le site reel sous le curseur
+06-accueil-pleine-page.webp -- page entiere 1440x8154 (10 tranches)
+07-projets-entete.webp -- Page /projets : entete et filtres
+08-projets-filtre-clients.webp -- Filtre Realisations clients : les 5 projets livres a des clients
+09-projets-filtre-produits.webp -- Filtre Mes produits : les 5 produits avec leurs badges de stores
+10-projets-pleine-page.webp -- page entiere 1440x3904 (5 tranches)
+11-apps-entete.webp -- Page /apps refaite : les deux anciennes apps ont ete retirees
+12-apps-cosmecheck-badges.webp -- CosmeCheck : badges App Store et Google Play actifs
+13-apps-badges-bientot.webp -- Memory Pilot : Google Play actif, App Store grise tant que la fiche n est pas ouverte
+14-apps-pleine-page.webp -- page entiere 1440x4963 (6 tranches)
+15-mobile-accueil-pleine-page.webp -- page entiere 780x14830 (9 tranches)
+16-mobile-projets-pleine-page.webp -- page entiere 780x7611 (5 tranches)
+17-mobile-apps-pleine-page.webp -- page entiere 780x8991 (6 tranches)
+
+ERREURS CONSOLE / REQUETES ECHOUEES
+----------------------------------------
+Aucune.

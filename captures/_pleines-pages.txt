@@ -1,0 +1,6 @@
+06-accueil-pleine-page.webp -- page entiere 1440x8154
+10-projets-pleine-page.webp -- page entiere 1440x3904
+14-apps-pleine-page.webp -- page entiere 1440x4963
+15-mobile-accueil-pleine-page.webp -- page entiere 390x14830 (pixels CSS)
+16-mobile-projets-pleine-page.webp -- page entiere 390x7611 (pixels CSS)
+17-mobile-apps-pleine-page.webp -- page entiere 390x8991 (pixels CSS)

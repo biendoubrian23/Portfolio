@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -24,10 +26,12 @@ export default function Footer() {
           <div>
             <h4 className="font-bold mb-4">Navigation</h4>
             <ul className="space-y-2">
-              <li><a href="#maison" className="text-gray-400 hover:text-white transition-colors">Accueil</a></li>
-              <li><a href="#apropos" className="text-gray-400 hover:text-white transition-colors">Services</a></li>
-              <li><a href="#aboutme" className="text-gray-400 hover:text-white transition-colors">À propos</a></li>
-              <li><a href="#portefeuille" className="text-gray-400 hover:text-white transition-colors">Mes Projets</a></li>
+              <li><Link href="/" className="text-gray-400 hover:text-white transition-colors">Accueil</Link></li>
+              <li><Link href="/#apropos" className="text-gray-400 hover:text-white transition-colors">Savoir-faire</Link></li>
+              <li><Link href="/#aboutme" className="text-gray-400 hover:text-white transition-colors">À propos</Link></li>
+              <li><Link href="/projets" className="text-gray-400 hover:text-white transition-colors">Mes projets</Link></li>
+              <li><Link href="/apps" className="text-gray-400 hover:text-white transition-colors">Mes applications</Link></li>
+              <li><Link href="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</Link></li>
             </ul>
           </div>
 
@@ -47,7 +51,7 @@ export default function Footer() {
             © {currentYear} Brian BIENDOU. Tous droits réservés.
           </p>
           <div className="flex gap-6 text-sm">
-            <a href="#contact" className="text-gray-400 hover:text-white transition-colors">Me contacter</a>
+            <Link href="/#contact" className="text-gray-400 hover:text-white transition-colors">Me contacter</Link>
           </div>
         </div>
       </div>

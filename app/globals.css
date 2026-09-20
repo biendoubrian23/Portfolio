@@ -242,3 +242,178 @@ body {
 .aboutme-section .dot-animate {
   animation: dot-pulse 2s ease-in-out infinite;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   Carousel infini — section « Ce que je construis »
+   ═══════════════════════════════════════════════════════════ */
+
+@keyframes marquee-left {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes marquee-right {
+  from { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee-left var(--marquee-duration, 48s) linear infinite;
+}
+
+.marquee-track[data-direction='right'] {
+  animation-name: marquee-right;
+}
+
+.marquee-viewport:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Fondu sur les bords du carousel */
+.marquee-viewport {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 7%, black 93%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 7%, black 93%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Loupe de prévisualisation — défilement automatique du site
+   ═══════════════════════════════════════════════════════════ */
+
+@keyframes peek-scroll {
+  0%, 6%    { transform: translate3d(0, 0, 0); }
+  94%, 100% { transform: translate3d(0, calc(-100% + var(--peek-height)), 0); }
+}
+
+.peek-scroller {
+  will-change: transform;
+  animation: peek-scroll var(--peek-duration, 20s) ease-in-out infinite alternate;
+}
+
+@keyframes peek-in {
+  from { opacity: 0; transform: scale(0.94) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.peek-panel {
+  animation: peek-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .peek-scroller { animation: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Cartes projet — relief 3D et halo lumineux au survol
+   ═══════════════════════════════════════════════════════════ */
+
+.tilt-card {
+  transform: perspective(1100px)
+             rotateX(var(--tilt-x, 0deg))
+             rotateY(var(--tilt-y, 0deg))
+             translate3d(0, var(--tilt-lift, 0px), 0);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.tilt-card .tilt-glow {
+  background: radial-gradient(
+    380px circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    var(--glow-color, rgba(59, 130, 246, 0.18)),
+    transparent 62%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.tilt-card:hover .tilt-glow { opacity: 1; }
+
+/* Balayage lumineux qui traverse la carte au survol */
+@keyframes sheen-sweep {
+  from { transform: translateX(-120%) skewX(-18deg); }
+  to   { transform: translateX(240%) skewX(-18deg); }
+}
+
+.sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%) skewX(-18deg);
+  pointer-events: none;
+}
+
+.sheen:hover::after {
+  animation: sheen-sweep 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card { transform: none; }
+  .sheen:hover::after { animation: none; }
+}
+
+/* Apparition au scroll */
+@keyframes rise-in {
+  from { opacity: 0; transform: translate3d(0, 28px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+.rise-in { animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* Curseur-indice « survolez-moi » */
+@keyframes hint-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.08); }
+}
+
+.hint-pulse { animation: hint-pulse 2.4s ease-in-out infinite; }
+
+/* ═══════════════════════════════════════════════════════════
+   Fenêtre navigateur intégrée — défile au survol du bloc
+   ═══════════════════════════════════════════════════════════ */
+
+.scroll-frame .scroll-inner {
+  animation: peek-scroll var(--peek-duration, 26s) ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.scroll-frame:hover .scroll-inner,
+.scroll-frame:focus-within .scroll-inner {
+  animation-play-state: running;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-frame .scroll-inner { animation: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Apparition au scroll (composant <Reveal />)
+   ═══════════════════════════════════════════════════════════ */
+
+.pre-reveal { opacity: 0; }
+
+.pre-reveal.revealed {
+  animation: rise-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pre-reveal { opacity: 1; }
+  .pre-reveal.revealed { animation: none; }
+}
+
+/* Sur écran tactile, il n'y a pas de survol : le cadre défile de lui-même. */
+@media (hover: none) {
+  .scroll-frame .scroll-inner { animation-play-state: running; }
+}

@@ -15,21 +15,23 @@ const navStructure = [
       { name: 'À Propos', href: '#aboutme', id: 'aboutme', isPage: false }
     ]
   },
-  { 
-    name: 'Mes Expériences', 
-    href: '#experiences', 
-    id: 'experiences', 
+  {
+    name: 'Mes Expériences',
+    href: '#experiences',
+    id: 'experiences',
     isPage: false,
     subItems: [
-      { name: 'Services', href: '#apropos', id: 'apropos', isPage: false }
+      { name: 'Savoir-faire', href: '#apropos', id: 'apropos', isPage: false }
     ]
   },
-  { 
-    name: 'Mes Projets', 
-    href: '#portefeuille', 
-    id: 'portefeuille', 
+  {
+    name: 'Mes Projets',
+    href: '#portefeuille',
+    id: 'portefeuille',
     isPage: false,
     subItems: [
+      { name: 'Tous les projets', href: '/projets', id: 'projets', isPage: true },
+      { name: 'Mes applications', href: '/apps', id: 'apps', isPage: true },
       { name: 'Ma Stack', href: '#techstack', id: 'techstack', isPage: false },
       { name: 'Certifications', href: '#certifications', id: 'certifications', isPage: false }
     ]
@@ -52,11 +54,19 @@ export default function Navigation() {
 
   // Check if we're on the blog page
   const isBlogPage = pathname?.startsWith('/blog');
+  // Toute page autre que l'accueil : les ancres doivent repasser par « / »
+  const isSubPage = pathname !== '/';
+  const isProjectsPage = pathname?.startsWith('/projets') || pathname?.startsWith('/apps');
 
   // Détection de la section visible au scroll
   useEffect(() => {
     if (isBlogPage) {
       setActiveSection('Blog');
+      return;
+    }
+
+    if (isProjectsPage) {
+      setActiveSection('Mes Projets');
       return;
     }
 
@@ -90,7 +100,7 @@ export default function Navigation() {
     });
 
     return () => observer.disconnect();
-  }, [isBlogPage]);
+  }, [isBlogPage, isProjectsPage]);
 
   const handleNavClick = (name: string) => {
     setActiveSection(name);
@@ -100,7 +110,8 @@ export default function Navigation() {
 
   // Vérifier si un item principal ou ses sous-items sont actifs
   const isItemActive = (item: typeof navStructure[0]) => {
-    if (item.isPage) return isBlogPage;
+    if (item.isPage) return pathname?.startsWith(item.href);
+    if (item.id === 'portefeuille' && isProjectsPage) return true;
     if (activeSection === item.name) return true;
     return item.subItems.some(sub => activeSection === sub.name);
   };
@@ -117,7 +128,7 @@ export default function Navigation() {
           {/* Navigation links - Desktop only */}
           <div className="hidden lg:flex items-center space-x-8">
             {navStructure.map((item) => {
-              const href = item.isPage ? item.href : (isBlogPage ? `/${item.href}` : item.href);
+              const href = item.isPage ? item.href : (isSubPage ? `/${item.href}` : item.href);
               const isActive = isItemActive(item);
               const hasDropdown = item.subItems.length > 0;
               
@@ -166,7 +177,7 @@ export default function Navigation() {
                       
                       <div className="relative bg-white py-2">
                         {item.subItems.map((subItem, index) => {
-                          const subHref = subItem.isPage ? subItem.href : (isBlogPage ? `/${subItem.href}` : subItem.href);
+                          const subHref = subItem.isPage ? subItem.href : (isSubPage ? `/${subItem.href}` : subItem.href);
                           const isSubActive = activeSection === subItem.name;
                           
                           return (
@@ -219,7 +230,7 @@ export default function Navigation() {
       <div className={`lg:hidden absolute top-full left-0 right-0 bg-white border-b-2 border-black shadow-lg transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
         <div className="px-6 py-4 space-y-1">
           {navStructure.map((item) => {
-            const href = item.isPage ? item.href : (isBlogPage ? `/${item.href}` : item.href);
+            const href = item.isPage ? item.href : (isSubPage ? `/${item.href}` : item.href);
             const isActive = isItemActive(item);
             const hasDropdown = item.subItems.length > 0;
             const isExpanded = openDropdown === item.name;
@@ -262,7 +273,7 @@ export default function Navigation() {
                   <div className={`overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}>
                     <div className="ml-4 pl-4 border-l-2 border-gray-200 space-y-1 py-2">
                       {item.subItems.map((subItem) => {
-                        const subHref = subItem.isPage ? subItem.href : (isBlogPage ? `/${subItem.href}` : subItem.href);
+                        const subHref = subItem.isPage ? subItem.href : (isSubPage ? `/${subItem.href}` : subItem.href);
                         const isSubActive = activeSection === subItem.name;
                         
                         return (
