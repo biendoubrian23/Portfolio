@@ -1,0 +1,22 @@
+OK   savoir-faire rangée 1 : défile tout seul — -43 px en 1,2 s
+OK   savoir-faire rangée 1 : suit la souris quand on la tire — -500 px pour 500 px tirés
+OK   savoir-faire rangée 1 : garde de l'élan au lâcher — -137 px de glisse
+OK   projets « Mes produits » : défile tout seul — -22 px en 1,2 s
+OK   projets « Mes produits » : suit la souris quand on la tire — -500 px pour 500 px tirés
+OK   projets « Mes produits » : garde de l'élan au lâcher — -120 px de glisse
+OK   un glissement n’ouvre aucun site — 0 ouverture(s)
+OK   un clic simple ouvre toujours le site — 1 ouverture(s)
+OK   file infinie en tirant vers la droite (≈ 7 000 px) — 0 image(s) avec un vide
+OK   file infinie en tirant vers la gauche (≈ 7 000 px) — 0 image(s) avec un vide
+OK   glissement horizontal au pavé tactile — -301 px
+OK   la molette verticale fait toujours défiler la page — page descendue de 400 px
+OK   aucune erreur JavaScript (bureau)
+OK   mobile savoir-faire : glisse au doigt vers la gauche — -257 px
+OK   mobile savoir-faire : la page ne bouge pas pendant le glissement — 0 px
+OK   mobile savoir-faire : un geste vertical fait défiler la page — page descendue de 285 px
+OK   mobile projets : glisse au doigt vers la gauche — -252 px
+OK   mobile projets : la page ne bouge pas pendant le glissement — 0 px
+OK   mobile projets : un geste vertical fait défiler la page — page descendue de 285 px
+OK   aucune erreur JavaScript (mobile)
+
+20/20 vérifications réussies

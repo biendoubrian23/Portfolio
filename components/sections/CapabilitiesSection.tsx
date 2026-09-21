@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import Reveal from '@/components/Reveal';
+import Marquee from '@/components/Marquee';
 import { getPointer } from '@/lib/pointer';
 import { AndroidGlyph, AppleGlyph } from '@/components/PlatformGlyphs';
 import {
@@ -133,10 +134,9 @@ const capabilities: Capability[] = [
 ];
 
 /** Nombre d'exemplaires de la liste dans la piste : il en reste toujours
- *  assez hors ecran pour qu'aucun vide n'apparaisse, meme sur un tres grand
- *  moniteur. La piste recule d'un exemplaire, soit 1/REPEATS de sa largeur. */
+ *  assez hors écran pour qu'aucun vide n'apparaisse, même sur un très grand
+ *  moniteur, et même quand on tire la rangée à la main. */
 const REPEATS = 4;
-const SHIFT = `-${(100 / REPEATS).toFixed(4)}%`;
 
 const stats: Array<{ value: string; label: string; platforms?: boolean }> = [
   { value: '10', label: 'projets en production' },
@@ -352,28 +352,17 @@ export default function CapabilitiesSection() {
 
       {/* Carousel infini — deux rangées en sens opposés */}
       <Reveal className="relative mt-14 flex flex-col gap-5" delay={260}>
-        <div className="marquee-viewport overflow-hidden">
-          <div
-            className="marquee-track"
-            style={{ '--marquee-duration': '52s', '--marquee-shift': SHIFT } as React.CSSProperties}
-          >
-            {Array.from({ length: REPEATS }, () => rowOne).flat().map((capability, i) => (
-              <CapabilityCard key={`${capability.title}-${i}`} capability={capability} onHover={setHovered} />
-            ))}
-          </div>
-        </div>
+        <Marquee repeats={REPEATS} speed={36}>
+          {rowOne.map((capability) => (
+            <CapabilityCard key={capability.title} capability={capability} onHover={setHovered} />
+          ))}
+        </Marquee>
 
-        <div className="marquee-viewport overflow-hidden">
-          <div
-            className="marquee-track"
-            data-direction="right"
-            style={{ '--marquee-duration': '58s', '--marquee-shift': SHIFT } as React.CSSProperties}
-          >
-            {Array.from({ length: REPEATS }, () => rowTwo).flat().map((capability, i) => (
-              <CapabilityCard key={`${capability.title}-${i}`} capability={capability} onHover={setHovered} />
-            ))}
-          </div>
-        </div>
+        <Marquee repeats={REPEATS} speed={32} direction="right">
+          {rowTwo.map((capability) => (
+            <CapabilityCard key={capability.title} capability={capability} onHover={setHovered} />
+          ))}
+        </Marquee>
       </Reveal>
 
       <CapabilityPeek capability={hovered} />

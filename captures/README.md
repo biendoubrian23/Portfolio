@@ -60,3 +60,9 @@ barres fixes neutralisées pour qu'elles ne se répètent pas.
 production, en profil mobile bridé et en profil bureau, ainsi que la liste
 des corrections qui ont permis d'y arriver. Les mesures brutes sont dans
 `_pagespeed-mobile.json` et `_pagespeed-desktop.json`.
+
+## Gestes sur les carrousels
+
+`_tests-carrousels.txt` : 20 vérifications automatiques dans Chrome, à la
+souris et au doigt (glisser, élan au lâcher, file infinie dans les deux
+sens, clic préservé, geste vertical laissé à la page, pavé tactile).

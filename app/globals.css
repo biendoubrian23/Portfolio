@@ -244,48 +244,31 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   Carousel infini — section « Ce que je construis »
+   Carousel infini — piloté par le composant <Marquee />
    ═══════════════════════════════════════════════════════════ */
 
-/*
- * La piste contient plusieurs exemplaires de la liste et recule d'exactement
- * un exemplaire : a l'instant ou le premier sort par la gauche, le suivant
- * occupe la meme place, et la file repart sans jamais se vider. Le nombre
- * d'exemplaires est choisi pour qu'il reste toujours de quoi remplir l'ecran,
- * meme tres large ; `--marquee-shift` vaut alors 1 / nombre d'exemplaires.
- */
-@keyframes marquee-left {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(var(--marquee-shift, -50%), 0, 0); }
-}
-
-@keyframes marquee-right {
-  from { transform: translate3d(var(--marquee-shift, -50%), 0, 0); }
-  to   { transform: translate3d(0, 0, 0); }
-}
-
+/* La position est calculée en JavaScript : défilement automatique, glissement
+   au doigt ou à la souris, élan au lâcher. Le CSS ne fait que la mise en
+   forme. */
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-left var(--marquee-duration, 48s) linear infinite;
+  align-items: stretch;
 }
 
-.marquee-track[data-direction='right'] {
-  animation-name: marquee-right;
-}
-
-.marquee-viewport:hover .marquee-track {
-  animation-play-state: paused;
-}
-
-/* Fondu sur les bords du carousel */
 .marquee-viewport {
+  /* Le geste vertical reste à la page ; l'horizontal revient à la rangée. */
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  /* Fondu sur les bords du carousel */
   -webkit-mask-image: linear-gradient(to right, transparent, black 7%, black 93%, transparent);
   mask-image: linear-gradient(to right, transparent, black 7%, black 93%, transparent);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
+.marquee-viewport.is-dragging {
+  cursor: grabbing;
 }
 
 /* ═══════════════════════════════════════════════════════════

@@ -3,6 +3,7 @@ import { ArrowRight, Briefcase, Rocket } from 'lucide-react';
 import { clientProjects, productProjects, type Project } from '@/lib/projects';
 import ProjectCard from '@/components/ProjectCard';
 import Reveal from '@/components/Reveal';
+import Marquee from '@/components/Marquee';
 
 /** Intitulé de rangée, posé au-dessus des cartes plutôt que sur les visuels. */
 function RowLabel({
@@ -31,35 +32,29 @@ function RowLabel({
 /** Trois exemplaires suffisent ici : chaque carte fait 400 px, un exemplaire
  *  en couvre donc largement plus qu'un écran. */
 const REPEATS = 3;
-const SHIFT = `-${(100 / REPEATS).toFixed(4)}%`;
 
 /**
- * Rangée défilant en continu. Le défilement s'arrête au survol, le temps
- * de lire la carte et de laisser la loupe parcourir le site.
+ * Rangée défilant en continu, qu'on peut aussi faire glisser à la main.
+ * Le défilement s'arrête au survol, le temps de lire la carte et de laisser
+ * la loupe parcourir le site.
  */
 function ProjectMarquee({
   projects,
-  duration,
+  speed,
   direction,
 }: {
   projects: Project[];
-  duration: string;
+  speed: number;
   direction?: 'right';
 }) {
   return (
-    <div className="marquee-viewport overflow-hidden py-4">
-      <div
-        className="marquee-track items-stretch"
-        data-direction={direction}
-        style={{ '--marquee-duration': duration, '--marquee-shift': SHIFT } as React.CSSProperties}
-      >
-        {Array.from({ length: REPEATS }, () => projects).flat().map((project, index) => (
-          <div key={`${project.slug}-${index}`} className="mx-3 w-[400px] shrink-0">
-            <ProjectCard project={project} compact />
-          </div>
-        ))}
-      </div>
-    </div>
+    <Marquee repeats={REPEATS} speed={speed} direction={direction} className="py-4">
+      {projects.map((project) => (
+        <div key={project.slug} className="mx-3 w-[400px] shrink-0">
+          <ProjectCard project={project} compact />
+        </div>
+      ))}
+    </Marquee>
   );
 }
 
@@ -106,7 +101,7 @@ export default function PortfolioSection() {
           label="Mes produits"
           count={`${productProjects.length} applications`}
         />
-        <ProjectMarquee projects={productProjects} duration="118s" />
+        <ProjectMarquee projects={productProjects} speed={18} />
       </Reveal>
 
       {/* Projets clients */}
@@ -117,7 +112,7 @@ export default function PortfolioSection() {
           label="Projets clients"
           count={`${clientProjects.length} réalisations`}
         />
-        <ProjectMarquee projects={clientProjects} duration="126s" direction="right" />
+        <ProjectMarquee projects={clientProjects} speed={17} direction="right" />
       </Reveal>
 
       {/* Vers la page complète */}
