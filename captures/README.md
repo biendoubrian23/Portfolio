@@ -52,6 +52,7 @@ barres fixes neutralisées pour qu'elles ne se répètent pas.
 | `15-mobile-accueil-pleine-page.webp` | Accueil |
 | `16-mobile-projets-pleine-page.webp` | Mes projets |
 | `17-mobile-apps-pleine-page.webp` | Mes applications |
+| `20-mobile-hero-titre-3-lignes.webp` | Titre du hero sur trois lignes, « Software Engineer » en pastille vert pastel inclinée |
 
 ## Audit PageSpeed
 

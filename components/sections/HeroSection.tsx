@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function HeroSection() {
   return (
-    <section id="maison" className="bg-meelo-purple pt-[114px] pb-[114px]">
+    <section id="maison" className="bg-meelo-purple pt-[114px] pb-[114px] overflow-x-clip">
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between">
           {/* Left side - Text content on desktop, Top on mobile */}
@@ -13,14 +13,12 @@ export default function HeroSection() {
               </span>
             </div>
             
-            <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight" style={{animation: 'fadeInLeft 1s ease-out 0.2s both'}}>
-              Je suis Biendou<br />
-              Brian, Software<br />
-              <span className="relative inline-block">
-                Engineer.
-                <svg className="absolute -bottom-1 left-0 w-full" height="8" viewBox="0 0 300 8" fill="none">
-                  <path d="M2 6C100 2 200 2 298 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
+            <h1 className="text-[2rem] sm:text-5xl lg:text-[3.5rem] font-bold mb-6 leading-[1.15] sm:leading-tight" style={{animation: 'fadeInLeft 1s ease-out 0.2s both'}}>
+              <span className="block">Je suis</span>
+              <span className="block whitespace-nowrap">Brian BIENDOU</span>
+              {/* Pastille vert pastel, légèrement inclinée : jamais coupée sur deux lignes */}
+              <span className="mt-2 inline-block whitespace-nowrap -rotate-2 rounded-xl bg-[#BDF5CF] px-3 py-0.5 text-[#0B3B1F] shadow-[0_10px_28px_-8px_rgba(74,222,128,0.7)]">
+                Software Engineer
               </span>
             </h1>
             
@@ -33,7 +31,7 @@ export default function HeroSection() {
           <div className="lg:w-1/2 flex justify-center relative my-8 lg:my-0">
             <div className="relative" style={{animation: 'fadeInRight 1.2s ease-out 0.3s both'}}>
               {/* Purple background with rounded corners */}
-              <div className="w-[380px] h-[470px] sm:w-[459px] sm:h-[568px] bg-[#B8A8D8] rounded-[95px] overflow-hidden relative border-2 border-black">
+              <div className="w-[min(380px,calc(100vw-4rem))] aspect-[459/568] sm:w-[459px] bg-[#B8A8D8] rounded-[95px] overflow-hidden relative border-2 border-black">
                 <Image 
                   src="/images/image_principale.webp" 
                   alt="Biendou Brian"

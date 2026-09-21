@@ -24,7 +24,7 @@ export default function ProjectsExplorer() {
   return (
     <>
       {/* Filtres */}
-      <div className="sticky top-[72px] z-30 -mx-6 mb-14 border-y-2 border-black bg-white/90 px-6 py-3 backdrop-blur">
+      <div className="sticky top-[72px] z-30 mb-14 border-y-2 border-black bg-white/90 px-6 py-3 backdrop-blur">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-2.5">
           {filters.map((item) => (
             <button
